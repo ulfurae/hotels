@@ -65,7 +65,7 @@ public class HotelSearch {
         mainFrame.setVisible(true);
     }
 
-    // function that searches the database with the
+    // function that searches the database with a input string
     private void searchDatabase(String inputStr) {
 
         Connection con = null;
