@@ -1,4 +1,4 @@
-package hotelsearch;
+package HotelSearch;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -137,5 +137,4 @@ public class HotelSearch {
 
         }
     }
-
 }
