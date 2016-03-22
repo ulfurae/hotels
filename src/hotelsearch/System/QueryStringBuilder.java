@@ -1,8 +1,16 @@
-package hotelsearch.System;
+package HotelSearch.System;
 
+import com.google.common.base.Defaults;
+import org.jooq.*;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import org.jooq.impl.DSL;
+
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.value;
 
 /**
  * Created by halldorr on 16/03/16.
@@ -11,32 +19,35 @@ public class QueryStringBuilder {
     private static final Set<Class<?>> _primitiveTypes = getPrimitiveTypes();
     private boolean _whereUsed = false;
 
-    public String CreateQueryString(Object filter, String tableName) {
-        // TODO : Skipta þessu string concant út fyrir prepare statement út af sql injection. Sjá:
-        // TODO : Nota - jooq eða PreparedStatement í Java jdbc
-        String queryString = "SELECT * FROM " + tableName + " ";
+    public String GetQueryString(Object filter, String tableName) {
+        DSLContext create = DSL.using(SQLDialect.MYSQL);
+        SelectQuery queryString = create.selectQuery();
+
+        List<Condition> conditionList = new ArrayList();
 
         Field[] fields = filter.getClass().getDeclaredFields();
 
         for (Field f : fields) {
-            String condition = _whereUsed ? "WHERE " : "AND ";
+            try {
+                Object o = f.get(filter);
+                if (isPrimitiveType(f.getType())) {
+                    if (o.equals(Defaults.defaultValue(f.getType()))) continue;
+//                    conditionList.add(table(tableName)
+//                                        .field(f.getName().toLowerCase())
+//                                        .equal());
 
-            if (isPrimitiveType(f.getClass())) {
-                try {
-                    Object o = f.get(filter);
-                    queryString += condition + " " + o;
-                    _whereUsed = true;
-                } catch (IllegalAccessException e) { }
-            }
-            if (isString(f.getClass())) {
-                try {
-                    Object o = f.get(filter);
-                    queryString += "%LIKE% " + o;
-                } catch (IllegalAccessException e) { }
-            }
+                }
+                if (isString(f.getType())) {
+                    if (o == null) continue;
+                    conditionList.add(table(tableName)
+                                        .field(f.getName().toLowerCase())
+                                        .likeIgnoreCase(o.toString()));
+                }
+            } catch (Exception e) { }
         }
         _whereUsed = false;
-        return queryString;
+        queryString.addConditions(conditionList);
+        return queryString.getSQL();
     }
 
     private boolean isString(Class<?> c) {
@@ -49,11 +60,11 @@ public class QueryStringBuilder {
 
     private static Set<Class<?>> getPrimitiveTypes() {
         Set<Class<?>> ret = new HashSet<Class<?>>();
-        ret.add(Boolean.class);
-        ret.add(Double.class);
-        ret.add(Integer.class);
-        ret.add(Long.class);
-        ret.add(Float.class);
+        ret.add(boolean.class);
+        ret.add(double.class);
+        ret.add(int.class);
+        ret.add(long.class);
+        ret.add(float.class);
         return ret;
     }
 }
