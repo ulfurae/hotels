@@ -1,10 +1,9 @@
-package HotelSearch;
+package hotelsearch;
 
 import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +19,19 @@ public class HotelSearch {
     private final String mysqlUser = "root";
     private final String mysqlPass = "mculli";
 
-    // search box where user types in search
-    private JTextField searchTxtInput = new JTextField();
-    // main search button
-    private JButton searchBtn = new JButton();
-    // text area that search results are put into
-    private JTextArea resultTxtArea = new JTextArea("", 10, 10);
+
+    private JPanel ss;
+    private JComboBox areaComboBox;
+    private JButton searchBtn;
+    private JPanel resultPanel;
+    private JPanel searchPanel;
+    private JTextPane resultTxtArea;
 
     //// MAIN FUNCTION \\\\
     public static void main(String[] args) {
+
+        try { UIManager.setLookAndFeel(new NimbusLookAndFeel()); }
+        catch (UnsupportedLookAndFeelException e) { e.printStackTrace();}
 
         HotelSearch hotelSearch = new HotelSearch();
 
@@ -38,31 +41,21 @@ public class HotelSearch {
     // Function that creates main frame for the hotels search
     private void makeMainFrame() {
 
+
         JFrame mainFrame = new JFrame("Search For Hotels");
         JPanel mainPanel = new JPanel();
         Box vertBox = Box.createVerticalBox();
 
-        mainFrame.setSize(300,400);
+        mainFrame.setSize(400,600);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        searchTxtInput.setSize(200,30);
-        searchTxtInput.setVisible(true);
+        mainFrame.add(ss);
 
-        resultTxtArea.setSize(200,30);
-        resultTxtArea.setText("Search");
-
-        vertBox.add(searchTxtInput);
-        vertBox.add(searchBtn);
-        vertBox.add(resultTxtArea);
-
-        mainPanel.add(vertBox);
-
-        mainFrame.add(mainPanel);
-
-        searchBtn.setText("Search");
         searchBtn.addActionListener(new searchBtnAction());
 
         mainFrame.setVisible(true);
+
+        resultPanel.setVisible(false);
     }
 
     // function that searches the database with a input string
@@ -78,8 +71,10 @@ public class HotelSearch {
         // query that is used to get results from the database
         String mainQuery = "Select Hotel.name, Hotel.type, Hotel.city, Location.airport \n" +
                 "From Hotel, Location \n" +
-                "Where Hotel.location_id = Location.id \n" +
-                "and Hotel.city = ?";
+                "Where Hotel.location_id = Location.id \n";
+
+        if(inputStr!="All areas")
+            mainQuery = mainQuery + "and Location.name = ?";
 
         try {
             // connection made to the database
@@ -87,7 +82,9 @@ public class HotelSearch {
 
             // query is executed through a prepared statement and the ? is set as the value of inputStr
             stat = con.prepareStatement(mainQuery);
-            stat.setString(1, inputStr);
+
+            if(inputStr!="All areas")
+                stat.setString(1, inputStr);
 
             // the query is executed and the result is put into results
             results = stat.executeQuery();
@@ -119,11 +116,12 @@ public class HotelSearch {
     // function that populates the resultTxtArea with a ListHotel
     private void showResults(List<ListHotel> hotelList)  {
 
+        if(!resultPanel.isVisible()) resultPanel.setVisible(true);
         resultTxtArea.setText("");
 
         for (ListHotel list : hotelList) {
 
-            resultTxtArea.setText(resultTxtArea.getText() + "\n" + list.name + " - " + list.city);
+            resultTxtArea.setText(resultTxtArea.getText() + "\n" + list.name + " - " + list.city + "\n");
 
         }
 
@@ -133,7 +131,7 @@ public class HotelSearch {
         public void actionPerformed(ActionEvent e) {
 
             // calls searchDatabase with the text from searchTxtInput
-            searchDatabase(searchTxtInput.getText());
+            searchDatabase(areaComboBox.getSelectedItem().toString());
 
         }
     }
