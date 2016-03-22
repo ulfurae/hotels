@@ -1,16 +1,23 @@
 package HotelSearch.System;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.sql.ResultSet;
+
 /**
  * Created by Halldor on 16/03/16.
  */
 public class SqlMapper {
 
-    private <TOut, TIn> TOut Map(TIn dataSet) {
-        return (TOut)dataSet;
-    }
+    public static <TOut> List<TOut> ToHotel(ResultSet rs) {
+        try {
+            while (rs.next()) {
 
+            }
+        } catch (SQLException e) {
 
-    private int foo () {
-        return 2;
+        }
+
+        return (List<TOut>) rs;
     }
 }

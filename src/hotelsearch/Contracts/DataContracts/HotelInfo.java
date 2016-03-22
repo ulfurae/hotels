@@ -1,4 +1,4 @@
-package hotelsearch.Contracts.DataContracts;
+package HotelSearch.Contracts.DataContracts;
 
 /**
  * Created by halldorr on 16/03/16.
@@ -13,7 +13,7 @@ public class HotelInfo {
 
     public double Rating;
 
-    //public Area area; uncomment when area class has been created
+    public int AreaId;
 
     public String name;
 }

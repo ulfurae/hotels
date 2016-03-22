@@ -1,4 +1,4 @@
-package HotelSearch;
+package hotelsearch;
 
 /**
  * Created by ulfurae on 16.2.2016.
