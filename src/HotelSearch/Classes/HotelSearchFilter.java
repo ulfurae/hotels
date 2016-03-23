@@ -1,6 +1,4 @@
-package HotelSearch.Contracts.SearchFilters;
-
-import HotelSearch.Contracts.DataContracts.HotelInfo;
+package HotelSearch.Classes;
 
 import java.util.Date;
 

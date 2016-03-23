@@ -1,4 +1,4 @@
-package hotelsearch;
+package HotelSearch.System;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  */
 public class DbUtils {
 
-    public static ResultSet SearchDB(String QueryString) {
+    public ResultSet SearchDB(String QueryString) {
 
         ResultSet resultSet;
 
@@ -28,7 +28,8 @@ public class DbUtils {
 
             // query is executed through a prepared statement and the ? is set as the value of QueryString
             stat = con.prepareStatement(QueryString);
-            stat.setString(1, QueryString);
+
+            //stat.setString(1, QueryString);
 
             // the query is executed and the result is put into resultSet
             resultSet = stat.executeQuery();

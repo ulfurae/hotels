@@ -1,4 +1,4 @@
-package hotelsearch;
+package HotelSearch;
 
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -20,7 +20,7 @@ public class HotelSearch {
     private final String mysqlPass = "mculli";
 
 
-    private JPanel ss;
+    public JPanel ss;
     private JComboBox areaComboBox;
     private JButton searchBtn;
     private JPanel resultPanel;
@@ -56,6 +56,22 @@ public class HotelSearch {
         mainFrame.setVisible(true);
 
         resultPanel.setVisible(false);
+    }
+
+    // Function that creates main frame for the hotels search
+    public void make() {
+
+        searchBtn.addActionListener(new searchBtnAction());
+
+
+        resultPanel.setVisible(false);
+    }
+
+    // Function that creates main frame for the hotels search
+    public JPanel getPanel() {
+
+
+        return ss;
     }
 
     // function that searches the database with a input string

@@ -1,4 +1,4 @@
-package HotelSearch.Contracts.DataContracts;
+package HotelSearch.Classes;
 
 /**
  * Created by halldorr on 16/03/16.
