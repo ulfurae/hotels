@@ -13,7 +13,7 @@ public class HotelInfo {
 
     public double Rating;
 
-    public int AreaId;
+    public Area area;
 
     public String name;
 }
