@@ -2,8 +2,12 @@ package HotelSearch.Presentation.Views;
 
 import HotelSearch.Presentation.Interfaces.ISearchPanel;
 import com.michaelbaranov.microba.calendar.DatePicker;
+import org.jooq.util.derby.sys.Sys;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.util.Date;
 
 /**
@@ -20,16 +24,42 @@ public class HotelSearchPanel implements ISearchPanel {
     private JCheckBox chkWifi;
     private JCheckBox chkSmoking;
     private JCheckBox chkBreakfast;
-    private DatePicker dpDateIn;
     private DatePicker dpDateOut;
+    private DatePicker dpDateIn;
     private JComboBox areaComboBox;
     private JButton searchBtn;
     private JTextPane resultTxtArea;
 
     public HotelSearchPanel() {
 
-
+        dpDateIn.addActionListener(new dpInAction());
+        dpDateOut.addActionListener(new dpOutAction());
     }
+
+    class dpInAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+            if(dpDateOut.getDate().before(dpDateIn.getDate())) {
+                try {
+                    //Date increment = DateUtils.addDays(today, 1);
+                    dpDateOut.setDate(dpDateIn.getDate());
+                } catch (PropertyVetoException e1) { e1.printStackTrace(); }
+            }
+
+        } }
+
+    class dpOutAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+            if(dpDateOut.getDate().before(dpDateIn.getDate())) {
+
+                JOptionPane.showMessageDialog(null, "Can't select date prior to chek-in date");
+                try {
+                    dpDateOut.setDate(dpDateIn.getDate());
+                } catch (PropertyVetoException e1) { e1.printStackTrace(); }
+            }
+
+    } }
 
     public JPanel getPanel() {
         return searchPanel;

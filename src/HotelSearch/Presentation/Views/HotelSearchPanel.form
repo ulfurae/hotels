@@ -28,20 +28,25 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="d022e" class="com.michaelbaranov.microba.calendar.DatePicker" binding="dpDateOut">
+          <component id="d022e" class="com.michaelbaranov.microba.calendar.DatePicker" binding="dpDateIn">
             <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="4" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <autoscrolls value="false"/>
+              <focusLostBehavior value="1"/>
               <keepTime value="true"/>
+              <showNoneButton value="false"/>
+              <showTodayButton value="true"/>
             </properties>
           </component>
-          <component id="71e30" class="com.michaelbaranov.microba.calendar.DatePicker" binding="dpDateIn">
+          <component id="71e30" class="com.michaelbaranov.microba.calendar.DatePicker" binding="dpDateOut">
             <constraints>
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <showNoneButton value="false"/>
+            </properties>
           </component>
           <component id="174f4" class="javax.swing.JLabel">
             <constraints>

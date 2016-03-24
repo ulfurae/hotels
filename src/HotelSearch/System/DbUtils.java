@@ -1,6 +1,7 @@
 package HotelSearch.System;
 
 import java.sql.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,30 +10,36 @@ import java.util.logging.Logger;
  */
 public class DbUtils {
 
-    public ResultSet SearchDB(String QueryString) {
+    public ResultSet SearchDB(List<String> queryList) {
 
         ResultSet resultSet;
 
         // info to connect to MySQL database
-        final String mysqlUrl = "jdbc:mysql://localhost:3306/hotelDB";
+        final String mysqlUrl = "jdbc:mysql://localhost:3306/hotelDB?allowMultiQueries=true";
         final String mysqlUser = "root";
         final String mysqlPass = "mculli";
 
         Connection con = null;
-        PreparedStatement stat = null;
+        PreparedStatement stat1 = null;
+        PreparedStatement stat2 = null;
         resultSet = null;
 
         try {
             // connection made to the database
             con = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
 
-            // query is executed through a prepared statement and the ? is set as the value of QueryString
-            stat = con.prepareStatement(QueryString);
 
+
+                stat2 = con.prepareStatement(queryList.get(1));
+                stat2.executeUpdate();
+
+
+            stat1 = con.prepareStatement(queryList.get(0));
+            resultSet = stat1.executeQuery();
             //stat.setString(1, QueryString);
 
             // the query is executed and the result is put into resultSet
-            resultSet = stat.executeQuery();
+
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(DbUtils.class.getName());
