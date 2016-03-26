@@ -1,65 +1,55 @@
 package HotelSearch.System;
 
-import HotelSearch.ListHotel;
 import com.google.common.base.Defaults;
 import org.jooq.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.lang.reflect.Field;
-import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.jooq.impl.DSL;
-
-import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.value;
+import HotelSearch.Classes.SqlCustomQuery;
+import static org.jooq.impl.DSL.*;
 
 /**
  * Created by halldorr on 16/03/16.
  */
 public class QueryStringBuilder {
     private static final Set<Class<?>> _primitiveTypes = getPrimitiveTypes();
-    private boolean _whereUsed = false;
 
-    public String GetQueryString(Object filter, String tableName) {
+    public static SqlCustomQuery getSQLQueryString(Object filter, String tableName) {
         DSLContext create = DSL.using(SQLDialect.MYSQL);
-        SelectQuery queryString = create.selectQuery();
+        SelectJoinStep queryString = create.select().from(tableName);
 
-        List<Condition> conditionList = new ArrayList();
-
-        Field[] fields = filter.getClass().getDeclaredFields();
+        Field[] fields = filter.getClass().getFields();
+        SelectConditionStep step = queryString.where();
 
         for (Field f : fields) {
             try {
                 Object o = f.get(filter);
+
                 if (isPrimitiveType(f.getType())) {
                     if (o.equals(Defaults.defaultValue(f.getType()))) continue;
-//                    conditionList.add(table(tableName)
-//                                        .field(f.getName().toLowerCase())
-//                                        .equal());
-
+                    step = queryString.where(field(name(f.getName().toLowerCase())).equal(o));
                 }
                 if (isString(f.getType())) {
                     if (o == null) continue;
-                    conditionList.add(table(tableName)
-                                        .field(f.getName().toLowerCase())
-                                        .likeIgnoreCase(o.toString()));
+                    step = queryString.where(field(name(f.getName().toLowerCase())).likeIgnoreCase(o.toString()));
                 }
-            } catch (Exception e) { }
+            }
+            catch (Exception e) { System.out.println("Error adding fields as conditions in QueryStringBuilder.GetQueryString"); }
         }
-        _whereUsed = false;
-        queryString.addConditions(conditionList);
-        return queryString.getSQL();
+        SqlCustomQuery query = new SqlCustomQuery();
+        query.sqlStatement = step.getSQL();
+        query.values = step.getBindValues();
+        return query;
     }
 
-    private boolean isString(Class<?> c) {
+    private static boolean isString(Class<?> c) {
         return c == String.class;
     }
 
-    private boolean isPrimitiveType(Class<?> c) {
+    private static boolean isPrimitiveType(Class<?> c) {
         return _primitiveTypes.contains(c);
     }
 
