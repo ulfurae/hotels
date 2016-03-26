@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class HotelSearchFilter extends HotelInfo{
 
-    public Date DateIn;
+    public Date dateIn;
 
-    public Date DateOut;
+    public Date dateOut;
 }
