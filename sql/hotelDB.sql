@@ -1,11 +1,11 @@
-
-CREATE DATABASE IF NOT EXISTS hotelDB 
+DROP DATABASE IF EXISTS hotelDB;
+CREATE DATABASE hotelDB 
 CHARACTER SET utf8
 COLLATE utf8_general_ci;
 
 USE hotelDB;
 
-CREATE TABLE Location (
+CREATE TABLE Area (
 	id int NOT NULL,
 	name varchar(40) NOT NULL,
 	airport varchar(40) NOT NULL,
@@ -16,13 +16,16 @@ CREATE TABLE Hotel (
 	id int NOT NULL auto_increment,
 	name varchar(40) NOT NULL,
 	type varchar(30) NOT NULL,
-	location_id int NOT NULL,
+	areaid int NOT NULL,
 	description varchar(900),
 	city varchar(40),
 	address varchar(50),
 	picture varchar(50),
+    wifi boolean,
+    smoking boolean,
+    breakfast boolean,
 	PRIMARY KEY (id),
-	FOREIGN KEY (location_id) REFERENCES Location(id)
+	FOREIGN KEY (areaid) REFERENCES Area(id)
 );
 
 CREATE TABLE Guest (

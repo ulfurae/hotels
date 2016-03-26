@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.List;
 
@@ -73,10 +75,17 @@ public class SearchPanelPresenter {
     class searchBtnAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
+            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
+            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
 
-            String query = new QueryStringBuilder().makeHotelQuery(View.getAreaName());
+            List<String> sendList = new ArrayList<String>();
+            sendList.add(View.getAreaName());
+            sendList.add(din);
+            sendList.add(dout);
 
-            ResultSet results = new DbUtils().SearchDB(query);
+            List<String>  queryList = new QueryStringBuilder().makeHotelQuery(sendList);
+
+            ResultSet results = new DbUtils().SearchDB(queryList);
 
             List<ListHotel> hotelList = new SqlMapper().mapHotels(results);
 
