@@ -1,6 +1,6 @@
 package HotelSearch.System;
 
-import HotelSearch.ListHotel;
+import HotelSearch.Demo.ListHotel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class SqlMapper {
         return (List<TOut>) rs;
     }
 
-    public List<ListHotel>  mapHotels(ResultSet results) {
+    public static List<ListHotel> mapHotels(ResultSet results) {
 
         List<ListHotel> hotelList = new ArrayList<ListHotel>();
 
