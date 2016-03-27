@@ -1,4 +1,9 @@
-package HotelSearch;
+package HotelSearch.Demo;
+
+import HotelSearch.Classes.Area;
+import HotelSearch.Classes.HotelSearchFilter;
+import HotelSearch.Classes.SqlCustomQuery;
+import HotelSearch.System.QueryStringBuilder;
 
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -17,7 +22,7 @@ public class HotelSearch {
     // info to connect to MYSQL database
     private final String mysqlUrl = "jdbc:mysql://localhost:3306/hotelDB";
     private final String mysqlUser = "root";
-    private final String mysqlPass = "mculli";
+    private final String mysqlPass = "1";
 
 
     public JPanel ss;
@@ -56,6 +61,12 @@ public class HotelSearch {
         mainFrame.setVisible(true);
 
         resultPanel.setVisible(false);
+
+        HotelSearchFilter filter = new HotelSearchFilter();
+
+        filter.name = "Halli kúl";
+        filter.wifi = true;
+        filter.rating = 4.0;
     }
 
     // Function that creates main frame for the hotels search
@@ -147,7 +158,11 @@ public class HotelSearch {
         public void actionPerformed(ActionEvent e) {
 
             // calls searchDatabase with the text from searchTxtInput
-            searchDatabase(areaComboBox.getSelectedItem().toString());
+            Area area = (Area)areaComboBox.getSelectedItem();
+            HotelSearchFilter filter = new HotelSearchFilter();
+            filter.areaId = area.id;
+            SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel");
+            //searchDatabase(query);
 
         }
     }

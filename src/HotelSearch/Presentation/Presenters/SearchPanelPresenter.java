@@ -1,20 +1,13 @@
 package HotelSearch.Presentation.Presenters;
 
-import HotelSearch.Classes.HotelInfo;
+import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.HotelSearchFilter;
-import HotelSearch.ListHotel;
+import HotelSearch.Demo.MockRepo;
 import HotelSearch.Presentation.Interfaces.ISearchPanel;
-import HotelSearch.System.DbUtils;
-import HotelSearch.System.QueryStringBuilder;
-import HotelSearch.System.SqlMapper;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.function.Function;
+import java.util.function.Consumer;
 import java.util.List;
 
 /**
@@ -22,76 +15,59 @@ import java.util.List;
  */
 public class SearchPanelPresenter {
 
-    private Function _callback;
+    private Consumer _callback;
     public ISearchPanel View;
-    public JPanel main;
-    public JPanel resultPanel;
-    public JTextPane resultTxtArea;
 
-    public SearchPanelPresenter(ISearchPanel view) {
-        //_callback = callback;
-        //View = view;
+    public SearchPanelPresenter(ISearchPanel view, Consumer<List<Hotel>> callback) {
+        _callback = callback;
         View = view;
 
         Initialize();
     }
 
-    public void Initialize() {
-
+    private void Initialize() {
         View.setSearchBtnAction(new searchBtnAction());
-
-        main = View.getPanel();
-        resultPanel = View.getResultPanel();
-        resultTxtArea = View.getResultTxtArea();
     }
 
-    public void Display(List<HotelInfo> hotels) {
-        _callback.apply(hotels);
+    private void display(List<Hotel> hotels) {
+        _callback.accept(hotels);
     }
 
-    public void GetHotels() {
+    private void getHotels() {
         HotelSearchFilter filter = new HotelSearchFilter();
 
-        filter.name = View.getHotelName();
-        filter.DateIn = View.getDateIn();
-        filter.DateOut = View.getDateOut();
+        // Todo : Á að vera hægt að leita eftir nafni? ef svo þarf að setja inn txtfield
+//        filter.name = View.getHotelName();
+        // Todo : Finna út úr area combo box
+//        filter.areaId = View.getAreaId();
+
+        filter.breakfast = View.getBreakfast();
+        filter.smoking = View.getSmoking();
+        filter.wifi = View.getWifi();
+
+        filter.dateIn = View.getDateIn();
+        filter.dateOut = View.getDateOut();
+
+        List<Hotel> hotels = MockRepo.getHotels(filter);
+        display(hotels);
     }
-
-    // function that populates the resultTxtArea with a ListHotel
-    private void showResults(List<ListHotel> hotelList) {
-
-        if (!resultPanel.isVisible()) resultPanel.setVisible(true);
-        resultTxtArea.setText("");
-
-        for (ListHotel list : hotelList) {
-
-            resultTxtArea.setText(resultTxtArea.getText() + "\n" + list.name + " - " + list.city + "\n");
-
-        }
-
-    }
-
 
     class searchBtnAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-
-            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
-            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
-
-            List<String> sendList = new ArrayList<String>();
-            sendList.add(View.getAreaName());
-            sendList.add(din);
-            sendList.add(dout);
-
-            List<String>  queryList = new QueryStringBuilder().makeHotelQuery(sendList);
-
-            ResultSet results = new DbUtils().SearchDB(queryList);
-
-            List<ListHotel> hotelList = new SqlMapper().mapHotels(results);
-
-            showResults(hotelList);
-
+            getHotels();
+//            filter.areaId = View.getAreaId();
+//            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
+//            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
+//
+//            SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel");
+//            List<String> sendList = new ArrayList<String>();
+//            sendList.add(View.getAreaName());
+//            sendList.add(din);
+//            sendList.add(dout);
+//
+//            List<String>  queryList = new QueryStringBuilder().makeHotelQuery(sendList);
+//
+//            ResultSet results = new DbUtils().SearchDB(query);
         }
     }
-
 }

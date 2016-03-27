@@ -1,4 +1,4 @@
-package HotelSearch;
+package HotelSearch.Demo;
 
 /**
  * Created by ulfurae on 16.2.2016.

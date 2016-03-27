@@ -5,15 +5,15 @@ package HotelSearch.Classes;
  */
 public class HotelInfo {
 
-    public boolean Wifi;
+    public boolean wifi;
 
-    public boolean Smoking;
+    public boolean smoking;
 
-    public boolean Breakfast;
+    public boolean breakfast;
 
-    public double Rating;
+    public double rating;
 
-    public Area area;
+    public int areaId;
 
     public String name;
 }
