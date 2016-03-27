@@ -12,6 +12,7 @@ public class Hotel {
     public String picture;
     public String description;
     public Review reviews;
+    public Area area;
     public Room rooms;
     public HotelInfo hotelInfo;
 /**

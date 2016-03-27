@@ -9,6 +9,8 @@ import java.util.Date;
  */
 public interface ISearchPanel {
 
+    JPanel getView();
+
     String getHotelName();
 
     int getAreaId();
@@ -24,14 +26,6 @@ public interface ISearchPanel {
     Date getDateIn();
 
     Date getDateOut();
-
-    JPanel getPanel();
-
-    JPanel getFilterPanel();
-    JPanel getMainPanel();
-    JPanel getResultPanel();
-
-    JTextPane getResultTxtArea();
 
     void setSearchBtnAction(ActionListener evt);
 }

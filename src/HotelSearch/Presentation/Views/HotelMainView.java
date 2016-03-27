@@ -1,12 +1,14 @@
 package HotelSearch.Presentation.Views;
 
+import HotelSearch.Presentation.Interfaces.IMainView;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * Created by Halldor on 22/03/16.
  */
-public class HotelMainView extends JFrame {
+public class HotelMainView extends JFrame implements IMainView {
 
     public JFrame mainFrame = new JFrame("Search for hotels in Iceland");
 
@@ -18,7 +20,7 @@ public class HotelMainView extends JFrame {
         mainFrame.setVisible(true);
     }
 
-    public JFrame getFrame() {
+    public JFrame getView() {
         return mainFrame;
     }
 }
