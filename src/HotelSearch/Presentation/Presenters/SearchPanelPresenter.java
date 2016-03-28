@@ -48,7 +48,8 @@ public class SearchPanelPresenter {
         filter.dateIn = View.getDateIn();
         filter.dateOut = View.getDateOut();
 
-        List<Hotel> hotels = MockRepo.getHotels(filter);
+        MockRepo mock = new MockRepo();
+        List<Hotel> hotels = mock.getHotels(filter);
         display(hotels);
     }
 

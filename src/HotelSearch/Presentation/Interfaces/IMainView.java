@@ -7,5 +7,5 @@ import javax.swing.*;
  */
 public interface IMainView {
 
-    public JFrame getView();
+    public void addComponent(IView view);
 }

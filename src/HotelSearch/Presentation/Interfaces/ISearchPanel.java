@@ -7,9 +7,7 @@ import java.util.Date;
 /**
  * Created by Halldor on 22/03/16.
  */
-public interface ISearchPanel {
-
-    JPanel getView();
+public interface ISearchPanel extends IView {
 
     String getHotelName();
 

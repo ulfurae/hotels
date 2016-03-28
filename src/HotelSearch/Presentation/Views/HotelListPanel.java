@@ -5,6 +5,7 @@ import HotelSearch.Classes.HotelInfo;
 import HotelSearch.Presentation.Interfaces.IHotelListPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,12 @@ public class HotelListPanel implements IHotelListPanel {
     private JPanel infoPanel;
     private JLabel lblHotelName;
     private JLabel lblHotelArea;
+
+    public HotelListPanel() {
+        pnlHotelPhoto.setLayout(new GridLayout(0,1));
+        btnBooking.setText("Skoða nánar");
+        btnBooking.setBackground(new Color(95,95,95));
+    }
 
     private Hotel _model;
 
@@ -46,8 +53,9 @@ public class HotelListPanel implements IHotelListPanel {
         lblHotelArea.setText(area);
     }
 
-    public void setHotelPicture() {
-
+    public void setHotelPicture(ImageIcon image) {
+        JLabel label = new JLabel("", image, JLabel.CENTER);
+        pnlHotelPhoto.add(label);
     }
 
     public void setHotelDescription(String description) {
@@ -61,7 +69,7 @@ public class HotelListPanel implements IHotelListPanel {
 
         for (Field f: fields) {
             try {
-                model.addElement(f.getName().toString() + f.get(hotelInfo).toString());
+                model.addElement(f.getName().toString() + ": " + f.get(hotelInfo).toString());
 
             } catch(Exception e) { }
         }

@@ -13,21 +13,25 @@ import java.awt.*;
 public class ResultPanel implements IResultPanel {
     private JPanel hotelList;
     private JLabel lblHotels;
-    private JPanel hotelListPanel;
+    private JScrollPane hotelScroll;
     private JPanel resultPanel;
+
+    public ResultPanel() {
+        hotelScroll.setLayout(new ScrollPaneLayout());
+        hotelScroll.setViewportView(hotelList);
+        hotelList.setLayout(new GridLayout(0,1));
+    }
 
     public JPanel getView(){
         return resultPanel;
     }
 
-    public IHotelListPanel getHotelListPanel() {
+    public IHotelListPanel getHotelScroll() {
         return new HotelListPanel();
     }
 
     public void addHotelListPanel(IHotelListPanel panel) {
-        hotelListPanel.setLayout(new GridLayout(hotelListPanel.getComponentCount()+1,hotelListPanel.getComponentCount()+1));
-        hotelListPanel.add(panel.getView());
-        hotelListPanel.validate();
-        hotelListPanel.repaint();
+        hotelList.add(panel.getView());
+        panel.getView().requestFocus();
     }
 }

@@ -5,10 +5,8 @@ import javax.swing.*;
 /**
  * Created by helgah on 23/03/16.
  */
-public interface IResultPanel {
-    JPanel getView();
-
-    IHotelListPanel getHotelListPanel();
+public interface IResultPanel extends IView {
+    IHotelListPanel getHotelScroll();
 
     void addHotelListPanel(IHotelListPanel panel);
 }
