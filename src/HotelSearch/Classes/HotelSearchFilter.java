@@ -1,6 +1,7 @@
 package HotelSearch.Classes;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 /**
  * Created by halldorr on 16/03/16.

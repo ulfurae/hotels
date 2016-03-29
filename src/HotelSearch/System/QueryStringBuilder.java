@@ -1,12 +1,11 @@
 package HotelSearch.System;
 
+import HotelSearch.Classes.QueryResolvers.IQueryResolver;
 import com.google.common.base.Defaults;
 import org.jooq.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
 import org.jooq.impl.DSL;
 import HotelSearch.Classes.SqlCustomQuery;
 import static org.jooq.impl.DSL.*;
@@ -15,9 +14,8 @@ import static org.jooq.impl.DSL.*;
  * Created by halldorr on 16/03/16.
  */
 public class QueryStringBuilder {
-    private static final Set<Class<?>> _primitiveTypes = getPrimitiveTypes();
 
-    public static SqlCustomQuery getSQLQueryString(Object filter, String tableName) {
+    public static SqlCustomQuery getSQLQueryString(Object filter, String tableName, IQueryResolver resolver) {
         DSLContext create = DSL.using(SQLDialect.MYSQL);
         SelectJoinStep queryString = create.select().from(tableName);
 
@@ -28,14 +26,17 @@ public class QueryStringBuilder {
             try {
                 Object o = f.get(filter);
 
-                if (isPrimitiveType(f.getType())) {
+                if (o == null) continue;
+                else if (f.getType().isPrimitive())
                     if (o.equals(Defaults.defaultValue(f.getType()))) continue;
+
+
+                if(resolver.equalCondition.contains(f))
                     step = queryString.where(field(name(f.getName().toLowerCase())).equal(o));
-                }
-                if (isString(f.getType())) {
-                    if (o == null) continue;
-                    step = queryString.where(field(name(f.getName().toLowerCase())).likeIgnoreCase(o.toString()));
-                }
+                else if (resolver.greaterEqualCondition.contains(f))
+                    step = queryString.where(field(name(f.getName().toLowerCase())).greaterOrEqual(o));
+                else if (resolver.lesserEqualCondition.contains(f))
+                    step = queryString.where(field(name(f.getName().toLowerCase())).lessOrEqual(o));
             }
             catch (Exception e) { System.out.println("Error adding fields as conditions in QueryStringBuilder.GetQueryString"); }
         }
@@ -44,25 +45,6 @@ public class QueryStringBuilder {
         query.values = step.getBindValues();
         return query;
     }
-
-    private static boolean isString(Class<?> c) {
-        return c == String.class;
-    }
-
-    private static boolean isPrimitiveType(Class<?> c) {
-        return _primitiveTypes.contains(c);
-    }
-
-    private static Set<Class<?>> getPrimitiveTypes() {
-        Set<Class<?>> ret = new HashSet<Class<?>>();
-        ret.add(boolean.class);
-        ret.add(double.class);
-        ret.add(int.class);
-        ret.add(long.class);
-        ret.add(float.class);
-        return ret;
-    }
-
 
     public List<String> makeHotelQuery(List<String> input) {
 

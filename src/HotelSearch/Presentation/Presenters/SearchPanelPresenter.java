@@ -7,6 +7,7 @@ import HotelSearch.Presentation.Interfaces.ISearchPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.function.Consumer;
 import java.util.List;
 
@@ -45,8 +46,8 @@ public class SearchPanelPresenter {
         filter.smoking = View.getSmoking();
         filter.wifi = View.getWifi();
 
-        filter.dateIn = View.getDateIn();
-        filter.dateOut = View.getDateOut();
+        filter.dateIn = new Date(View.getDateIn().getTime());
+        filter.dateOut = new Date(View.getDateOut().getTime());
 
         MockRepo mock = new MockRepo();
         List<Hotel> hotels = mock.getHotels(filter);

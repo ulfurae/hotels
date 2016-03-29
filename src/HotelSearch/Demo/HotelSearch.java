@@ -2,6 +2,7 @@ package HotelSearch.Demo;
 
 import HotelSearch.Classes.Area;
 import HotelSearch.Classes.HotelSearchFilter;
+import HotelSearch.Classes.QueryResolvers.HotelQueryResolver;
 import HotelSearch.Classes.SqlCustomQuery;
 import HotelSearch.System.QueryStringBuilder;
 
@@ -161,7 +162,7 @@ public class HotelSearch {
             Area area = (Area)areaComboBox.getSelectedItem();
             HotelSearchFilter filter = new HotelSearchFilter();
             filter.areaId = area.id;
-            SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel");
+            SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel", new HotelQueryResolver());
             //searchDatabase(query);
 
         }
