@@ -52,7 +52,7 @@ public class MockRepo {
 
 
         // Return the fake hotels
-            List<Hotel> hotelList = new ArrayList<Hotel>();
+        List<Hotel> hotelList = new ArrayList<Hotel>();
         hotelList.add(hotel1);
         hotelList.add(hotel2);
         return hotelList;
