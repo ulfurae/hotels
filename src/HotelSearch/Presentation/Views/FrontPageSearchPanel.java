@@ -16,8 +16,6 @@ public class FrontPageSearchPanel extends JPanel implements ISearchPanel{
     private JPanel searchPanel;
     private JPanel filterPanel;
     private JPanel mainPanel;
-    private JPanel resultPanel;
-    private JTextPane resultTxtArea;
     private JTextField txtName;
     private JCheckBox chkWifi;
     private JCheckBox chkSmoking;

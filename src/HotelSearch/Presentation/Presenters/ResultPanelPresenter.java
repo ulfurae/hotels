@@ -2,7 +2,6 @@ package HotelSearch.Presentation.Presenters;
 
 import HotelSearch.Classes.Hotel;
 import HotelSearch.Presentation.Interfaces.IHotelListPanel;
-import HotelSearch.Presentation.Interfaces.IMainView;
 import HotelSearch.Presentation.Interfaces.IResultPanel;
 import java.util.List;
 import java.util.function.Consumer;
@@ -26,10 +25,11 @@ public class ResultPanelPresenter {
 
     public void initialize() {
         for (Hotel h: _model) {
-            IHotelListPanel hotelPanel = View.getHotelListPanel();
+            IHotelListPanel hotelPanel = View.getHotelScroll();
 
             hotelPanel.setHotelArea(h.area.name);
             hotelPanel.setHotelName(h.hotelInfo.name);
+            hotelPanel.setHotelPicture(h.picture);
             hotelPanel.setHotelDescription(h.description);
             hotelPanel.setHotelInfo(h.hotelInfo);
 

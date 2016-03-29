@@ -11,19 +11,17 @@ import java.util.List;
 /**
  * Created by helgah on 23/03/16.
  */
-public interface IHotelListPanel {
+public interface IHotelListPanel extends IView {
 
     Hotel getModel();
 
     void setModel(Hotel hotel);
 
-    JPanel getView();
-
     void setHotelName(String name);
 
     void setHotelArea(String area);
 
-    void setHotelPicture();
+    void setHotelPicture(ImageIcon icon);
 
     void setHotelDescription(String description);
 

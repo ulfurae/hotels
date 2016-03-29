@@ -2,6 +2,10 @@ package HotelSearch.Demo;
 
 import HotelSearch.Classes.*;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +15,15 @@ import java.util.List;
  */
 public class MockRepo {
 
-    public static List<Hotel> getHotels(HotelSearchFilter filter) {
+    public List<Hotel> getHotels(HotelSearchFilter filter) {
         return createFakeHotels();
     }
 
-    private static List<Hotel> createFakeHotels() {
+    private  List<Hotel> createFakeHotels() {
         // Create the first fake hotel
         Hotel hotel1 = new Hotel();
         hotel1.description = "Frábært hótel, lol!";
+        hotel1.picture = getImage(1);
 
         hotel1.hotelInfo = new HotelInfo();
         hotel1.hotelInfo.areaId = 2;
@@ -32,6 +37,7 @@ public class MockRepo {
         // Create the second fake hotel
         Hotel hotel2 = new Hotel();
         hotel2.description = "Ekki svo frábært hótel, æi!";
+        hotel2.picture = getImage(2);
 
         hotel2.hotelInfo = new HotelInfo();
         hotel2.hotelInfo.areaId = 1;
@@ -43,10 +49,16 @@ public class MockRepo {
         hotel2.area = new Area();
         hotel2.area.name = "AK city";
 
+
+
         // Return the fake hotels
-        List<Hotel> hotelList = new ArrayList<Hotel>();
+            List<Hotel> hotelList = new ArrayList<Hotel>();
         hotelList.add(hotel1);
         hotelList.add(hotel2);
         return hotelList;
+    }
+
+    public ImageIcon getImage(int id) {
+        return new ImageIcon(this.getClass().getResource("/images/imgDemo" + id + ".jpeg"));
     }
 }

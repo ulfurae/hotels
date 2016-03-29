@@ -1,7 +1,6 @@
 package HotelSearch.Classes;
 
-import java.util.Date;
-import java.util.List;
+import javax.swing.*;
 
 /**
  * Created by Ricky Hien on 23.3.2016.
@@ -9,7 +8,7 @@ import java.util.List;
 public class Hotel {
 
     private int id;
-    public String picture;
+    public ImageIcon picture;
     public String description;
     public Review reviews;
     public Area area;

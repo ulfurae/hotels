@@ -37,19 +37,16 @@ public class HotelMainViewPresenter {
     }
 
     private void loadView(List<Hotel> params) {
-        JFrame frame = null;
         switch(state) {
             case Search:
                 // Initialize and load view
-                frame = View.getView();
-                frame.add(_searchPanel.getView());
+                View.addComponent(_searchPanel);
                 SearchPanelPresenter searchPresenter = new SearchPanelPresenter(_searchPanel, this::loadView);
                 // update program state
                 state = ProgramState.Result;
                 break;
             case Result:
-                frame = View.getView();
-                frame.add(_resultPanel.getView());
+                View.addComponent(_resultPanel);
                 ResultPanelPresenter resultPresenter = new ResultPanelPresenter(_resultPanel, this::loadView, params);
                 state = ProgramState.Book;
                 break;

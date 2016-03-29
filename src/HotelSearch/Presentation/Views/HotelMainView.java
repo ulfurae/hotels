@@ -1,6 +1,7 @@
 package HotelSearch.Presentation.Views;
 
 import HotelSearch.Presentation.Interfaces.IMainView;
+import HotelSearch.Presentation.Interfaces.IView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +15,15 @@ public class HotelMainView extends JFrame implements IMainView {
 
     // Creates main frame for the hotel search app
     public HotelMainView() {
-        mainFrame.setSize(600,700);
-        mainFrame.setMinimumSize(new Dimension(500,400));
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setVisible(true);
+        mainFrame.setMinimumSize(new Dimension(600, 300));
+        mainFrame.setResizable(true);
+        mainFrame.setLayout(new GridLayout(0,1));
     }
 
-    public JFrame getView() {
-        return mainFrame;
+    public void addComponent(IView view) {
+        mainFrame.add(view.getView());
+        mainFrame.pack();
+        mainFrame.setVisible(true);
     }
 }
