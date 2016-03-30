@@ -63,10 +63,10 @@ CREATE TABLE Room (
 
 CREATE TABLE Reserved_Room (
 	room_id int NOT NULL,
-	reservation_id int NOT NULL,
+	booking_id int NOT NULL,
 	status varchar(20) NOT NULL,
-	PRIMARY KEY (reservation_id),
-	FOREIGN KEY (reservation_id) REFERENCES Booking(id),
+	PRIMARY KEY (booking_id),
+	FOREIGN KEY (booking_id) REFERENCES Booking(id),
 	FOREIGN KEY (room_id) REFERENCES Room(id)
 );
 
