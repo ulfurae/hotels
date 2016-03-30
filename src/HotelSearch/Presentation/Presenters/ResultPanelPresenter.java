@@ -28,7 +28,7 @@ public class ResultPanelPresenter {
             IHotelListPanel hotelPanel = View.getHotelScroll();
 
             hotelPanel.setHotelArea(h.area.name);
-            hotelPanel.setHotelName(h.hotelInfo.name);
+            hotelPanel.setHotelName(h.name);
             hotelPanel.setHotelPicture(h.picture);
             hotelPanel.setHotelDescription(h.description);
             hotelPanel.setHotelInfo(h.hotelInfo);

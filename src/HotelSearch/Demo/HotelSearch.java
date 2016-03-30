@@ -65,7 +65,6 @@ public class HotelSearch {
 
         HotelSearchFilter filter = new HotelSearchFilter();
 
-        filter.name = "Halli kúl";
         filter.wifi = true;
         filter.rating = 4.0;
     }
@@ -162,7 +161,7 @@ public class HotelSearch {
             Area area = (Area)areaComboBox.getSelectedItem();
             HotelSearchFilter filter = new HotelSearchFilter();
             filter.areaId = area.id;
-            SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel", new HotelQueryResolver());
+            SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, new HotelQueryResolver());
             //searchDatabase(query);
 
         }

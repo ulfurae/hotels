@@ -41,7 +41,7 @@ public class Room {
                 hotel = new Hotel();
 
                 hotel.id = results.getInt("id");
-                hotel.hotelInfo.name = results.getString("name");
+                hotel.name = results.getString("name");
 
                 bookings = new Booking();
 

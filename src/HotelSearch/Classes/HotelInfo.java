@@ -14,6 +14,4 @@ public class HotelInfo {
     public double rating;
 
     public int areaId;
-
-    public String name;
 }

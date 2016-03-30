@@ -10,8 +10,8 @@ import java.util.List;
  * Created by Ricky Hien on 23.3.2016.
  */
 public class Hotel {
-
     public int id;
+    public String name;
     public ImageIcon picture;
     public String description;
     public Review reviews;
@@ -40,6 +40,7 @@ public class Hotel {
         try {
             while(results.next()) {
                 id = results.getInt("id");
+                name = results.getString("name");
                 description = results.getString("description");
 
                 // ToDo : Finna út úr því hvernig vil viljum geyma/sækja myndir
@@ -48,7 +49,6 @@ public class Hotel {
 
                 hotelInfo = new HotelInfo();
 
-                hotelInfo.name = results.getString("name");
                 hotelInfo.wifi = results.getBoolean("wifi");
                 hotelInfo.smoking = results.getBoolean("smoking");
                 hotelInfo.breakfast = results.getBoolean("breakfast");

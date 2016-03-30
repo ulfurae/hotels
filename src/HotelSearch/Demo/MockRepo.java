@@ -24,10 +24,10 @@ public class MockRepo {
         Hotel hotel1 = new Hotel();
         hotel1.description = "Frábært hótel, lol!";
         hotel1.picture = getImage(1);
+        hotel1.name = "Ruddahótelið";
 
         hotel1.hotelInfo = new HotelInfo();
         hotel1.hotelInfo.areaId = 2;
-        hotel1.hotelInfo.name = "Ruddahótelið";
         hotel1.hotelInfo.breakfast = true;
         hotel1.hotelInfo.rating = 4.7;
 
@@ -38,10 +38,10 @@ public class MockRepo {
         Hotel hotel2 = new Hotel();
         hotel2.description = "Ekki svo frábært hótel, æi!";
         hotel2.picture = getImage(2);
+        hotel2.name = "Suave Lounge Hotel";
 
         hotel2.hotelInfo = new HotelInfo();
         hotel2.hotelInfo.areaId = 1;
-        hotel2.hotelInfo.name = "Suave Lounge Hotel";
         hotel2.hotelInfo.rating = 2.5;
         hotel2.hotelInfo.wifi = true;
         hotel2.hotelInfo.smoking = true;
