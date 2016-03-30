@@ -11,7 +11,6 @@ public class Room {
     public int id;
     public Hotel hotel;
     public int roomNumber;
-    public int price;
     public int type;
     public Booking bookings;
     public RoomType roomType;
