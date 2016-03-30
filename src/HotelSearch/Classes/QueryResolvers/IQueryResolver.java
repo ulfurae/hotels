@@ -11,4 +11,6 @@ public interface IQueryResolver {
     List<Field> equalCondition = new ArrayList();
     List<Field> greaterEqualCondition = new ArrayList();
     List<Field> lesserEqualCondition = new ArrayList();
+
+    String getTableName();
 }

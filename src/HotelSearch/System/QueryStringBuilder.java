@@ -3,6 +3,8 @@ package HotelSearch.System;
 import HotelSearch.Classes.QueryResolvers.IQueryResolver;
 import com.google.common.base.Defaults;
 import org.jooq.*;
+
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.reflect.Field;
@@ -15,9 +17,12 @@ import static org.jooq.impl.DSL.*;
  */
 public class QueryStringBuilder {
 
-    public static SqlCustomQuery getSQLQueryString(Object filter, String tableName, IQueryResolver resolver) {
+    public static SqlCustomQuery getSQLQueryString(Object filter, IQueryResolver resolver) {
+        if (filter == null) throw new InvalidParameterException("Parameter filter can not be null");
+        if (resolver == null) throw new InvalidParameterException("Parameter resolver can not be null");
+
         DSLContext create = DSL.using(SQLDialect.MYSQL);
-        SelectJoinStep queryString = create.select().from(tableName);
+        SelectJoinStep queryString = create.select().from(resolver.getTableName());
 
         Field[] fields = filter.getClass().getFields();
         SelectConditionStep step = queryString.where();

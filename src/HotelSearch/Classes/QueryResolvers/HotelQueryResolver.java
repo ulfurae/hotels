@@ -27,4 +27,8 @@ public class HotelQueryResolver implements IQueryResolver {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public String getTableName() {
+        return "Hotel";
+    }
 }
