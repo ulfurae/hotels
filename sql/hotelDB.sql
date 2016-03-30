@@ -16,26 +16,24 @@ CREATE TABLE Hotel (
 	id int NOT NULL auto_increment,
 	name varchar(40) NOT NULL,
 	type varchar(30) NOT NULL,
-	areaid int NOT NULL,
+	area_id int NOT NULL,
 	description varchar(900),
-	city varchar(40),
-	address varchar(50),
 	picture varchar(50),
     wifi boolean,
     smoking boolean,
     breakfast boolean,
 	PRIMARY KEY (id),
-	FOREIGN KEY (areaid) REFERENCES Area(id)
+	FOREIGN KEY (area_id) REFERENCES Area(id)
 );
 
 CREATE TABLE Guest (
 	id int NOT NULL auto_increment,
-	first_name varchar(64) NOT NULL,
-	last_name varchar(64) NOT NULL,
+	name varchar(64) NOT NULL,
+	ssn int NOT NULL,
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE Reservation (
+CREATE TABLE Booking (
 	id int NOT NULL auto_increment,
 	hotel_id int NOT NULL,
 	date_in date NOT NULL,
@@ -51,6 +49,7 @@ CREATE TABLE Room_Type (
 	name varchar(30) NOT NULL,
 	description varchar(80),
 	max_capacaty int NOT NULL,
+	price int NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -67,13 +66,14 @@ CREATE TABLE Reserved_Room (
 	reservation_id int NOT NULL,
 	status varchar(20) NOT NULL,
 	PRIMARY KEY (reservation_id),
-	FOREIGN KEY (reservation_id) REFERENCES Reservation(id),
+	FOREIGN KEY (reservation_id) REFERENCES Booking(id),
 	FOREIGN KEY (room_id) REFERENCES Room(id)
 );
 
 CREATE TABLE Reviews (
 	id int NOT NULL,
 	hotel_id int NOT NULL,
+	customer_name varchar(45),
 	review varchar(200) NOT NULL,
 	rating double(2,1) NOT NULL,
 	FOREIGN KEY (hotel_id) REFERENCES Hotel(id)
