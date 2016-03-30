@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Hotel {
 
-    private int id;
+    public int id;
     public ImageIcon picture;
     public String description;
     public Review reviews;
@@ -57,6 +57,7 @@ public class Hotel {
 
                 area = new Area();
 
+                area.id = results.getInt("id");
                 area.name = results.getString("name");
                 area.airportName = results.getString("airport");
 

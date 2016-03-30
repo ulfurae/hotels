@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Ricky Hien on 23.3.2016.
  */
 public class Review {
-    private int id;
+    public int id;
     public Hotel hotel;
     public String customerName;
     public Date date;
@@ -25,7 +25,10 @@ public class Review {
                 customerName = results.getString("customer_name");
                 date = results.getDate("date");
 
-                // TODO: Hotel - nota nafn eða id?
+                hotel = new Hotel();
+
+                hotel.id = results.getInt("id");
+                hotel.hotelInfo.name = results.getString("name");
 
             }
 
