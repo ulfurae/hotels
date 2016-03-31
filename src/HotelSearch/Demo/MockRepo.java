@@ -20,6 +20,7 @@ public class MockRepo {
     }
 
     private  List<Hotel> createFakeHotels() {
+
         // Create the first fake hotel
         Hotel hotel1 = new Hotel();
         hotel1.description = "Frábært hótel, lol!";

@@ -36,6 +36,7 @@ public class HotelMainViewPresenter {
         loadView(null);
     }
 
+    int yah = 0;
     private void loadView(List<Hotel> params) {
         switch(state) {
             case Search:
@@ -46,9 +47,14 @@ public class HotelMainViewPresenter {
                 state = ProgramState.Result;
                 break;
             case Result:
-                View.addComponent(_resultPanel);
-                ResultPanelPresenter resultPresenter = new ResultPanelPresenter(_resultPanel, this::loadView, params);
-                state = ProgramState.Book;
+
+                ResultPanelPresenter resultPresenter;
+                if(yah==0) {
+                    View.addComponent(_resultPanel);
+                }
+                resultPresenter = new ResultPanelPresenter(_resultPanel, this::loadView, params);
+                yah++;
+                state = ProgramState.Result;
                 break;
             case Book:
                 break;

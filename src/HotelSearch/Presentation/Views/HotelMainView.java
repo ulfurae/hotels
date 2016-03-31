@@ -12,18 +12,20 @@ import java.awt.*;
 public class HotelMainView extends JFrame implements IMainView {
 
     public JFrame mainFrame = new JFrame("Search for hotels in Iceland");
+    private JPanel mp;
 
     // Creates main frame for the hotel search app
     public HotelMainView() {
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setMinimumSize(new Dimension(600, 300));
+        mainFrame.setMinimumSize(new Dimension(600, 650));
         mainFrame.setResizable(true);
-        mainFrame.setLayout(new GridLayout(0,1));
+        mainFrame.add(mp);
+        mainFrame.setVisible(true);
     }
 
     public void addComponent(IView view) {
-        mainFrame.add(view.getView());
-        mainFrame.pack();
-        mainFrame.setVisible(true);
+        mp.add(view.getView());
+        //mainFrame.pack();
+        //mainFrame.setVisible(true);
     }
 }
