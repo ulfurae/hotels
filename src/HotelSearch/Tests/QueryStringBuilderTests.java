@@ -119,4 +119,6 @@ public class QueryStringBuilderTests {
         assertEquals(val, query.values);
         assertEquals(qString, query.sqlStatement);
     }
+
+    // TODO: Skrifa eitt test í viðbót - stærð á fylki vs. initialized fields 
 }
