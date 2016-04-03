@@ -25,6 +25,7 @@ public class QueryStringBuilderTests {
     private HotelSearchFilter filter1;
     private HotelSearchFilter filter2;
     private HotelSearchFilter filter3;
+    private HotelSearchFilter threeNonDefaultValueFilter;
 
     private Date dateIn;
     private Date dateOut;
@@ -62,6 +63,15 @@ public class QueryStringBuilderTests {
         filter3 = new HotelSearchFilter();
         filter3.dateIn = dateIn;
         filter3.dateOut = dateOut;
+
+        // Initialize filter so exactly three fields are initialized to
+        // their non default value, e.g. 0 for int is a default value
+        threeNonDefaultValueFilter = new HotelSearchFilter();
+        threeNonDefaultValueFilter.wifi = true;
+        threeNonDefaultValueFilter.smoking = false;
+        threeNonDefaultValueFilter.breakfast = false;
+        threeNonDefaultValueFilter.areaId = 2;
+        threeNonDefaultValueFilter.rating = 3.5;
     }
 
     @After
@@ -69,6 +79,7 @@ public class QueryStringBuilderTests {
         filter1 = null;
         filter2 = null;
         filter3 = null;
+        threeNonDefaultValueFilter = null;
 
         query = null;
         resolver = null;
@@ -92,7 +103,7 @@ public class QueryStringBuilderTests {
         query = QueryStringBuilder.getSQLQueryString(filter1, resolver);
 
         String qString = "select * from Hotel where (`datein` >= ? and `dateout` <= ? and `wifi` = ? and `smoking` = ? and `rating` >= ? and `areaid` = ?)";
-        List<Object >val = Arrays.asList(dateIn, dateOut, true, true, 4.0, 2);
+        List<Object >val = Arrays.asList(dateIn, dateOut, filter1.wifi, filter1.smoking, filter1.rating, filter1.areaId);
 
         assertEquals(val, query.values);
         assertEquals(qString, query.sqlStatement);
@@ -103,7 +114,7 @@ public class QueryStringBuilderTests {
         query = QueryStringBuilder.getSQLQueryString(filter2, resolver);
 
         String qString = "select * from Hotel where (`wifi` = ? and `smoking` = ? and `rating` >= ? and `areaid` = ?)";
-        List<Object> val = Arrays.asList(true, true, 4.0, 2);
+        List<Object> val = Arrays.asList(true, true, filter2.rating, filter2.areaId);
 
         assertEquals(val, query.values);
         assertEquals(qString, query.sqlStatement);
@@ -120,5 +131,10 @@ public class QueryStringBuilderTests {
         assertEquals(qString, query.sqlStatement);
     }
 
-    // TODO: Skrifa eitt test í viðbót - stærð á fylki vs. initialized fields 
+    @Test
+    public void numberOfConditionsMatchesNonDefaultValueFieldsInFilter() {
+        query = QueryStringBuilder.getSQLQueryString(threeNonDefaultValueFilter, resolver);
+
+        assertEquals(3, query.values.size());
+    }
 }

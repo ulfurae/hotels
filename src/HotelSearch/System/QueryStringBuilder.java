@@ -36,7 +36,7 @@ public class QueryStringBuilder {
                     if (o.equals(Defaults.defaultValue(f.getType()))) continue;
 
 
-                if(resolver.equalCondition.contains(f))
+                if (resolver.equalCondition.contains(f))
                     step = queryString.where(field(name(f.getName().toLowerCase())).equal(o));
                 else if (resolver.greaterEqualCondition.contains(f))
                     step = queryString.where(field(name(f.getName().toLowerCase())).greaterOrEqual(o));
