@@ -16,6 +16,7 @@ public class ResultPanelPresenter {
     private List<Hotel> _model;
 
     public ResultPanelPresenter(IResultPanel view, Consumer<List<Hotel>> callback, List<Hotel> model) {
+
         View = view;
         _callback = callback;
         _model = model;
@@ -24,6 +25,8 @@ public class ResultPanelPresenter {
     }
 
     public void initialize() {
+
+        System.out.println(View.getHotelScroll());
         for (Hotel h: _model) {
             IHotelListPanel hotelPanel = View.getHotelScroll();
 

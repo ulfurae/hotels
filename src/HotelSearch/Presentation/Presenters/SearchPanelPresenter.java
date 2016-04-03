@@ -2,12 +2,20 @@ package HotelSearch.Presentation.Presenters;
 
 import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.HotelSearchFilter;
+import HotelSearch.Classes.SqlCustomQuery;
 import HotelSearch.Demo.MockRepo;
 import HotelSearch.Presentation.Interfaces.ISearchPanel;
+import HotelSearch.System.DbUtils;
+import HotelSearch.System.QueryStringBuilder;
+import HotelSearch.System.SqlMapper;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.List;
 
@@ -34,8 +42,10 @@ public class SearchPanelPresenter {
         _callback.accept(hotels);
     }
 
+    HotelSearchFilter filter = new HotelSearchFilter();
+
     private void getHotels() {
-        HotelSearchFilter filter = new HotelSearchFilter();
+
 
         // Todo : Á að vera hægt að leita eftir nafni? ef svo þarf að setja inn txtfield
 //        filter.name = View.getHotelName();
@@ -56,20 +66,27 @@ public class SearchPanelPresenter {
 
     class searchBtnAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            getHotels();
-//            filter.areaId = View.getAreaId();
-//            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
-//            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
-//
-//            SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel");
-//            List<String> sendList = new ArrayList<String>();
-//            sendList.add(View.getAreaName());
-//            sendList.add(din);
-//            sendList.add(dout);
-//
-//            List<String>  queryList = new QueryStringBuilder().makeHotelQuery(sendList);
-//
-//            ResultSet results = new DbUtils().SearchDB(query);
+            //getHotels();
+            //filter.areaId = View.getAreaId();
+            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
+            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
+
+            //SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel");
+            List<String> sendList = new ArrayList<String>();
+            sendList.add(View.getAreaName());
+            sendList.add(din);
+            sendList.add(dout);
+
+            System.out.print(View.getAreaName());
+
+            List<String>  queryList = new QueryStringBuilder().makeHotelQuery(sendList);
+
+            ResultSet results = new DbUtils().SearchDB(queryList);
+
+            List<Hotel> hotels = new SqlMapper().mapHotels(results);
+
+
+            display(hotels);
         }
     }
 }

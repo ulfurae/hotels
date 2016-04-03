@@ -82,8 +82,6 @@ public class QueryStringBuilder {
                 "OR (res.date_in >= " + dateIn + " and res.date_out < " + dateOut + " ))\n"  +
                 "and h.id = r.hotel_id;\n";
 
-        System.out.println(updateQuery);
-
         String mainQuery =
                 "Select h.*\n" +
                 "From Hotel h, Location l, Room r, Room_Type rt\n" +
@@ -94,6 +92,8 @@ public class QueryStringBuilder {
                 "\t(Select hotel_id from tempReserved)\n" +
                 "and l.name " + area  + "\n" +
                 "group by h.id;";
+
+        //System.out.println(mainQuery);
 
         List<String> sendList = new ArrayList<String>();
         sendList.add(mainQuery);

@@ -27,7 +27,7 @@ public class HotelListPanel implements IHotelListPanel {
 
     public HotelListPanel() {
         pnlHotelPhoto.setLayout(new GridLayout(0,1));
-        btnBooking.setText("Skoða nánar");
+        btnBooking.setText("See hotel");
         btnBooking.setBackground(new Color(95,95,95));
     }
 
