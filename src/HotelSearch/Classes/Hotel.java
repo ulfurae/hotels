@@ -13,11 +13,11 @@ public class Hotel {
     public int id;
     public String name;
     public ImageIcon picture;
-    public String description;
     public Review reviews;
     public Area area;
     public Room rooms;
     public HotelInfo hotelInfo;
+    public String description;
 /**
     public double calculateRating(){
 
@@ -42,6 +42,7 @@ public class Hotel {
                 id = results.getInt("id");
                 name = results.getString("name");
                 description = results.getString("description");
+
 
                 // ToDo : Finna út úr því hvernig vil viljum geyma/sækja myndir
                 //picture = results.getString("picture");

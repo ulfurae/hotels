@@ -42,11 +42,33 @@ public class SearchPanelPresenter {
         _callback.loadView(hotels);
     }
 
+    class searchBtnAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            //getHotels();
+            //filter.areaId = View.getAreaId();
+            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
+            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
+
+            //SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel");
+            List<String> sendList = new ArrayList<String>();
+            sendList.add(View.getAreaName());
+            sendList.add(din);
+            sendList.add(dout);
+
+            List<String>  queryList = new QueryStringBuilder().makeSearchHotelsQuery(sendList);
+
+            ResultSet results = new DbUtils().SearchDB(queryList);
+
+            List<Hotel> hotels = new SqlMapper().mapHotelSearch(results);
+
+
+            display(hotels);
+        }
+    }
+
+
     HotelSearchFilter filter = new HotelSearchFilter();
-
     private void getHotels() {
-
-
         // Todo : Á að vera hægt að leita eftir nafni? ef svo þarf að setja inn txtfield
 //        filter.name = View.getHotelName();
         // Todo : Finna út úr area combo box
@@ -64,27 +86,4 @@ public class SearchPanelPresenter {
         display(hotels);
     }
 
-    class searchBtnAction implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            //getHotels();
-            //filter.areaId = View.getAreaId();
-            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
-            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
-
-            //SqlCustomQuery query = QueryStringBuilder.getSQLQueryString(filter, "Hotel");
-            List<String> sendList = new ArrayList<String>();
-            sendList.add(View.getAreaName());
-            sendList.add(din);
-            sendList.add(dout);
-
-            List<String>  queryList = new QueryStringBuilder().makeHotelQuery(sendList);
-
-            ResultSet results = new DbUtils().SearchDB(queryList);
-
-            List<Hotel> hotels = new SqlMapper().mapHotels(results);
-
-
-            display(hotels);
-        }
-    }
 }

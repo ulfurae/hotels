@@ -2,15 +2,15 @@ package HotelSearch.Classes;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Ricky Hien on 23.3.2016.
  */
 public class Room {
-    public int id;
+    public int hotelId;
     public Hotel hotel;
-    public int roomNumber;
+    public int number;
     public int type;
     public Booking bookings;
     public RoomType roomType;
@@ -26,29 +26,30 @@ public class Room {
     public void toRoom(ResultSet results) {
         try {
             while(results.next()) {
-                id = results.getInt("id");
-                roomNumber = results.getInt("number");
 
+                hotelId = results.getInt("hotel_id");
+                number = results.getInt("number");
 
                 roomType = new RoomType();
 
-                roomType.id = results.getInt("id");
+                roomType.id = results.getInt("room_type_id");
                 roomType.name = results.getString("name");
                 roomType.price = results.getInt("price");
                 roomType.description = results.getString("description");
                 roomType.max_capacity = results. getInt("max_capacity");
 
-                hotel = new Hotel();
+                //hotel = new Hotel();
 
-                hotel.id = results.getInt("id");
-                hotel.name = results.getString("name");
+                //hotel.id = results.getInt("id");
+                //hotel.name = results.getString("name");
 
-                bookings = new Booking();
+                //bookings = new Booking();
 
-                bookings.toBooking(results);
+                //bookings.toBooking(results);
 
         }
 
         } catch (SQLException e) { e.printStackTrace(); }
+
     }
 }

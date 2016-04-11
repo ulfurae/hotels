@@ -29,10 +29,10 @@ public class DbUtils {
             con = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
 
 
-
+            if(queryList.get(1) != "") {
                 stat2 = con.prepareStatement(queryList.get(1));
                 stat2.executeUpdate();
-
+            }
 
             stat1 = con.prepareStatement(queryList.get(0));
             resultSet = stat1.executeQuery();

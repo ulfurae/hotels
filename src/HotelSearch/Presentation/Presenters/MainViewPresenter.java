@@ -1,6 +1,7 @@
 package HotelSearch.Presentation.Presenters;
 
 import HotelSearch.Classes.Hotel;
+import HotelSearch.Classes.Room;
 import HotelSearch.Presentation.Interfaces.IBookHotelPanel;
 import HotelSearch.Presentation.Interfaces.IMainView;
 import HotelSearch.Presentation.Interfaces.IResultPanel;
@@ -46,6 +47,11 @@ public class MainViewPresenter {
     }
 
     public void loadView(List<Hotel> params) {
+        _bookHotelPanel.getView().setVisible(false);
+        _resultPanel.getView().setVisible(true);
+        _searchPanel.getView().setVisible(true);
+
+
         switch(state) {
             case Search:
                 // Initialize and load view
@@ -56,20 +62,29 @@ public class MainViewPresenter {
                 break;
             case Result:
                 // remove previous hotels in result panel
-                _resultPanel.removeHotels();
+                if(params!=null) _resultPanel.removeHotels();
                 // Initialize and load view
                 View.addComponent(_resultPanel);
                 new ResultPanelPresenter(_resultPanel, this, params);
                 break;
+            case Back:
+                state = ProgramState.Result;
+                break;
+        }
+    }
+
+    public void loadBookHotelView(Hotel params1, List<Room> params2) {
+        switch(state) {
+
             case Book:
-                System.out.println("YESO");
-                // remove previous hotels in result panel
-                _resultPanel.removeHotels();
+
+                _searchPanel.getView().setVisible(false);
                 _resultPanel.getView().setVisible(false);
+                _bookHotelPanel.getView().setVisible(true);
 
                 // Initialize and load view
                 View.addComponent(_bookHotelPanel);
-                new BookHotelPanelPresenter(_bookHotelPanel, this::loadView, params);
+                new BookHotelPanelPresenter(_bookHotelPanel, this, params1, params2);
                 break;
         }
     }

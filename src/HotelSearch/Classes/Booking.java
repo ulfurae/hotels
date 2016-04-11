@@ -29,8 +29,8 @@ public class Booking {
 
                 room = new Room();
 
-                room.id = results.getInt("id");
-                room.roomNumber = results.getInt("number");
+                room.hotelId = results.getInt("Hotel_id");
+                room.number = results.getInt("number");
                 room.type = results.getInt("room_type_id");
 
             }

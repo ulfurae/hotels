@@ -28,10 +28,6 @@ public class ResultPanel implements IResultPanel {
         hotelList.removeAll();
     }
 
-    public void removeThis() {
-        this.getView().setVisible(false);
-    }
-
     public void setResultTxt(String text) {
         lblResults.setText(text);
     }
