@@ -30,7 +30,6 @@ public class SqlMapper {
 
     public List<Hotel> mapHotels(ResultSet results)  {
 
-        System.out.println("yah");
 
         List<Hotel> hotelList = new ArrayList<Hotel>();
         ArrayList<Hotel> hot = new ArrayList<>();
@@ -39,18 +38,20 @@ public class SqlMapper {
         try {
             while(results.next()) {
                 hot.add(i, new Hotel());
-                               System.out.print(results.getString("name"));
-                hot.get(i).description = results.getString("description").substring(0,100);
-                hot.get(i).picture = getImage(1);
+
+                hot.get(i).description = results.getString("description").substring(0,130) + "...";
+                hot.get(i).picture = getImage(results.getString("picture"));
                 hot.get(i).name = results.getString("name");
+                hot.get(i).id = results.getInt("id");
 
                 hot.get(i).hotelInfo = new HotelInfo();
-                hot.get(i).hotelInfo.areaId = results.getInt("location_id");
+                hot.get(i).hotelInfo.areaId = results.getInt("area_id");
                 hot.get(i).hotelInfo.breakfast = true;
                 hot.get(i).hotelInfo.rating = 4.7;
 
                 hot.get(i).area = new Area();
-                hot.get(i).area.name = results.getString("city");
+                hot.get(i).area.name = results.getString("area_name");
+                hot.get(i).area.city = results.getString("city");
                 hotelList.add(hot.get(i));
                 i++;
             }
@@ -69,8 +70,9 @@ public class SqlMapper {
 
     }
 
-    public ImageIcon getImage(int id) {
-        return new ImageIcon(this.getClass().getResource("/images/imgDemo" + id + ".jpeg"));
+    public ImageIcon getImage(String name) {
+
+        return new ImageIcon(this.getClass().getResource("/pics/" + name + ".jpg"));
     }
 
 }

@@ -2,18 +2,17 @@ package HotelSearch.Presentation.Views;
 
 import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.HotelInfo;
-import HotelSearch.Presentation.Interfaces.IHotelListPanel;
+import HotelSearch.Presentation.Interfaces.IResultListPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by helgah on 23/03/16.
  */
-public class HotelListPanel implements IHotelListPanel {
+public class ResultListPanel implements IResultListPanel {
 
     private JPanel eachHotelPanel;
     private JButton btnBooking;
@@ -23,9 +22,10 @@ public class HotelListPanel implements IHotelListPanel {
     private JPanel picturePanel;
     private JPanel infoPanel;
     private JLabel lblHotelName;
-    private JLabel lblHotelArea;
+    private JLabel lblHotelCity;
 
-    public HotelListPanel() {
+    public ResultListPanel() {
+
         pnlHotelPhoto.setLayout(new GridLayout(0,1));
         btnBooking.setText("See hotel");
         btnBooking.setBackground(new Color(95,95,95));
@@ -50,11 +50,18 @@ public class HotelListPanel implements IHotelListPanel {
     }
 
     public void setHotelArea(String area) {
-        lblHotelArea.setText(area);
+        lblHotelCity.setText(area);
     }
 
-    public void setHotelPicture(ImageIcon image) {
-        JLabel label = new JLabel("", image, JLabel.CENTER);
+    public void setHotelPicture(ImageIcon img) {
+
+        int scale = 3; // 2 times smaller
+        int width = img.getIconWidth();
+        int newWidth = width / scale;
+
+        JLabel label = new JLabel("", new ImageIcon(img.getImage().getScaledInstance(newWidth, -1,
+                java.awt.Image.SCALE_SMOOTH)), JLabel.CENTER);
+
         pnlHotelPhoto.add(label);
     }
 
@@ -75,4 +82,7 @@ public class HotelListPanel implements IHotelListPanel {
         }
         jlHotelInfo.setModel(model);
     }
+
+    public void setBtnAction(ActionListener evt) { btnBooking.addActionListener(evt);   }
+    public void setBtnName(String id) { btnBooking.setName(id);  }
 }

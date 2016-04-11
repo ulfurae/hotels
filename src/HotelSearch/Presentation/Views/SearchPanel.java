@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by Halldor on 22/03/16.
  */
-public class FrontPageSearchPanel extends JPanel implements ISearchPanel{
+public class SearchPanel extends JPanel implements ISearchPanel{
     private JPanel searchPanel;
     private JPanel filterPanel;
     private JPanel mainPanel;
@@ -25,7 +25,7 @@ public class FrontPageSearchPanel extends JPanel implements ISearchPanel{
     private JComboBox areaComboBox;
     private JButton searchBtn;
 
-    public FrontPageSearchPanel() {
+    public SearchPanel() {
 
         dpDateIn.addActionListener(new dpInAction());
         dpDateOut.addActionListener(new dpOutAction());

@@ -10,5 +10,5 @@ public class Area {
     public int id;
     public String airportName;
     public String name;
-
+    public String city;
 }

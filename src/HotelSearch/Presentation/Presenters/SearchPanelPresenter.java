@@ -24,10 +24,10 @@ import java.util.List;
  */
 public class SearchPanelPresenter {
 
-    private Consumer _callback;
+    private MainViewPresenter _callback;
     public ISearchPanel View;
 
-    public SearchPanelPresenter(ISearchPanel view, Consumer<List<Hotel>> callback) {
+    public SearchPanelPresenter(ISearchPanel view, MainViewPresenter callback) {
         _callback = callback;
         View = view;
 
@@ -39,7 +39,7 @@ public class SearchPanelPresenter {
     }
 
     private void display(List<Hotel> hotels) {
-        _callback.accept(hotels);
+        _callback.loadView(hotels);
     }
 
     HotelSearchFilter filter = new HotelSearchFilter();
@@ -76,8 +76,6 @@ public class SearchPanelPresenter {
             sendList.add(View.getAreaName());
             sendList.add(din);
             sendList.add(dout);
-
-            System.out.print(View.getAreaName());
 
             List<String>  queryList = new QueryStringBuilder().makeHotelQuery(sendList);
 

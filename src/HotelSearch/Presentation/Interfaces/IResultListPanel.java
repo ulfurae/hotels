@@ -4,6 +4,7 @@ import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.HotelInfo;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by helgah on 23/03/16.
  */
-public interface IHotelListPanel extends IView {
+public interface IResultListPanel extends IView {
 
     Hotel getModel();
 
@@ -26,4 +27,8 @@ public interface IHotelListPanel extends IView {
     void setHotelDescription(String description);
 
     void setHotelInfo(HotelInfo hotelInfo);
+
+    void setBtnAction(ActionListener evt);
+
+    void setBtnName(String id);
 }

@@ -59,6 +59,7 @@ public class Hotel {
 
                 area.id = results.getInt("id");
                 area.name = results.getString("name");
+                area.city = results.getString("city");
                 area.airportName = results.getString("airport");
 
                 rooms = new Room();

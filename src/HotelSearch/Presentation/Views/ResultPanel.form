@@ -8,14 +8,15 @@
     <properties>
       <autoscrolls value="false"/>
       <background color="-1"/>
-      <maximumSize width="600" height="460"/>
+      <enabled value="true"/>
+      <maximumSize width="800" height="1800"/>
       <minimumSize width="600" height="50"/>
       <opaque value="true"/>
-      <preferredSize width="600" height="460"/>
+      <preferredSize width="650" height="510"/>
     </properties>
     <border type="none"/>
     <children>
-      <component id="c544" class="javax.swing.JLabel" binding="lblHotels">
+      <component id="c544" class="javax.swing.JLabel" binding="lblResults">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -31,10 +32,14 @@
         </constraints>
         <properties>
           <autoscrolls value="false"/>
-          <horizontalScrollBarPolicy value="31"/>
+          <focusable value="false"/>
+          <horizontalScrollBarPolicy value="30"/>
+          <requestFocusEnabled value="false"/>
+          <verifyInputWhenFocusTarget value="false"/>
           <verticalScrollBarPolicy value="20"/>
+          <wheelScrollingEnabled value="true"/>
         </properties>
-        <border type="none"/>
+        <border type="empty"/>
         <children>
           <grid id="5028e" binding="hotelList" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>

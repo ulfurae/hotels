@@ -3,18 +3,11 @@ package HotelSearch;
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import HotelSearch.Classes.HotelSearchFilter;
-import HotelSearch.Classes.QueryResolvers.HotelQueryResolver;
-import HotelSearch.Classes.SqlCustomQuery;
-import HotelSearch.Presentation.Presenters.HotelMainViewPresenter;
-import HotelSearch.Presentation.Views.FrontPageSearchPanel;
-import HotelSearch.Presentation.Views.HotelMainView;
+import HotelSearch.Presentation.Presenters.MainViewPresenter;
+import HotelSearch.Presentation.Views.BookHotelPanel;
+import HotelSearch.Presentation.Views.SearchPanel;
+import HotelSearch.Presentation.Views.MainView;
 import HotelSearch.Presentation.Views.ResultPanel;
-import HotelSearch.System.QueryStringBuilder;
-
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 /**
@@ -25,10 +18,11 @@ public class program {
     public static void main(String[] args) {
         setLook();
 
-        HotelMainViewPresenter presenter = new HotelMainViewPresenter(new HotelMainView(),
-                                                                      new FrontPageSearchPanel(),
-                                                                      new FrontPageSearchPanel(),
-                                                                      new ResultPanel());
+        MainViewPresenter presenter = new MainViewPresenter(new MainView(),
+                                                            new SearchPanel(),
+                                                            new SearchPanel(),
+                                                            new ResultPanel(),
+                                                            new BookHotelPanel());
     }
 
     static void setLook() {

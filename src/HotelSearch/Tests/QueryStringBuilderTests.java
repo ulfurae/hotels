@@ -1,5 +1,7 @@
 package HotelSearch.Tests;
 
+import HotelSearch.Classes.Guest;
+import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.HotelSearchFilter;
 import HotelSearch.Classes.QueryResolvers.HotelQueryResolver;
 import HotelSearch.Classes.SqlCustomQuery;

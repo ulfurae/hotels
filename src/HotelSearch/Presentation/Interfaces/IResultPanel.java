@@ -1,12 +1,14 @@
 package HotelSearch.Presentation.Interfaces;
 
-import javax.swing.*;
-
 /**
  * Created by helgah on 23/03/16.
  */
 public interface IResultPanel extends IView {
-    IHotelListPanel getHotelScroll();
+    IResultListPanel getHotelScroll();
 
-    void addHotelListPanel(IHotelListPanel panel);
+    void addHotelListPanel(IResultListPanel panel);
+
+    void removeHotels();
+
+    void setResultTxt(String text);
 }

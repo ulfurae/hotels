@@ -66,31 +66,31 @@ public class QueryStringBuilder {
         dateOut = "'" + dateOut + "'";
 
 
-        String updateQuery = "DROP TABLE IF EXISTS tempReserved;\n" +
-                "CREATE TEMPORARY TABLE tempReserved (\n" +
+        String updateQuery = "DROP TABLE IF EXISTS tempBooked;\n" +
+                "CREATE TEMPORARY TABLE tempBooked (\n" +
                 "\thotel_id int,\n" +
                 "\troom_number int );\n" +
-                "INSERT INTO tempReserved\n" +
+                "INSERT INTO tempBooked\n" +
                 "Select h.id, r.number\n" +
-                "From Hotel h, Room r, Room_Type rt, Reservation res\n" +
-                "Where res.hotel_id = h.id\n" +
-                "and res.room_number = r.number\n" +
+                "From Hotel h, Room r, Room_Type rt, Booking book\n" +
+                "Where book.hotel_id = h.id\n" +
+                "and book.room_number = r.number\n" +
                 "and rt.id = r.room_type_id\n" +
-                "and ((res.date_in >= " + dateIn + " and res.date_out > " + dateOut + " and res.date_in < " + dateOut + ") \n" +
-                "OR (res.date_in <= " + dateIn + " and res.date_out < " + dateOut + " and res.date_out > " + dateIn + " ) \n" +
-                "OR (res.date_in <= " + dateIn + " and res.date_out > " + dateOut + ")\n" +
-                "OR (res.date_in >= " + dateIn + " and res.date_out < " + dateOut + " ))\n"  +
+                "and ((book.date_in >= " + dateIn + " and book.date_out >= " + dateOut + " and book.date_in < " + dateOut + ") \n" +
+                "OR (book.date_in <= " + dateIn + " and book.date_out < " + dateOut + " and book.date_out > " + dateIn + " ) \n" +
+                "OR (book.date_in <= " + dateIn + " and book.date_out > " + dateOut + ")\n" +
+                "OR (book.date_in >= " + dateIn + " and book.date_out < " + dateOut + " ))\n"  +
                 "and h.id = r.hotel_id;\n";
 
         String mainQuery =
-                "Select h.*\n" +
-                "From Hotel h, Location l, Room r, Room_Type rt\n" +
-                "Where h.location_id = l.id\n" +
+                "Select h.*, a.name area_name \n" +
+                "From Hotel h, Area a, Room r, Room_Type rt\n" +
+                "Where h.area_id = a.id\n" +
                 "and rt.id = r.room_type_id\n" +
                 "and h.id = r.hotel_id\n" +
                 "and h.id NOT IN \n" +
-                "\t(Select hotel_id from tempReserved)\n" +
-                "and l.name " + area  + "\n" +
+                "\t(Select hotel_id from tempBooked)\n" +
+                "and a.name " + area  + "\n" +
                 "group by h.id;";
 
         //System.out.println(mainQuery);
