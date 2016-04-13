@@ -16,17 +16,17 @@ VALUES ('Lovísa Huld Björnsdóttir', 2103902209);
 
 # Insert Room types
 
-INSERT INTO Room_Type (id, name, description, max_capacaty)
-VALUES (1, 'Single room', 'Room for one person. 1 single bed.', 1);
+INSERT INTO Room_Type (id, name, description, max_capacaty, price)
+VALUES (1, 'Single room', 'Room for one person. 1 single bed.', 1, 14000);
 
-INSERT INTO Room_Type (id, name, description, max_capacaty)
-VALUES (2, 'Double room', 'Room for two persons. 1 double bed.', 2);
+INSERT INTO Room_Type (id, name, description, max_capacaty, price)
+VALUES (2, 'Double room', 'Room for two persons. 1 double bed.', 2, 12000);
 
-INSERT INTO Room_Type (id, name, description, max_capacaty)
-VALUES (3, 'Dorm - small', 'Dorm with 6 bunk beds', 6);
+INSERT INTO Room_Type (id, name, description, max_capacaty, price)
+VALUES (3, 'Dorm - small', 'Dorm with 6 bunk beds', 6, 15000);
 
-INSERT INTO Room_Type (id, name, description, max_capacaty)
-VALUES (4, 'Dorm - large', 'Dorm with 12 bunk beds', 12);
+INSERT INTO Room_Type (id, name, description, max_capacaty, price)
+VALUES (4, 'Dorm - large', 'Dorm with 12 bunk beds', 12, 10000);
 
 # Insert rooms into hotels
 
