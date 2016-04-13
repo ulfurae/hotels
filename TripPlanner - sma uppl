@@ -13,6 +13,12 @@ Til að integrate-a kerfin okkar eru tvær leiðir færar:
     næstu dögum svo það er mikilvægt að við séum í sync.
     Ykkur ætti þó að vera óhætt að útfæra ISearchPanel, hann mun ekki breytast.
 
+    Þetta virkar þá svoleiðis að þið notið klasanann MainViewPresenter.
+    Hann er í /src/HotelSearch/Presentation/Presenters.
+    Þið sendið inn öll View sem þið gerðuð, sem útfæra þessi interface og Presenterinn sér um
+    að sækja gögn úr þessum views og setja gögnin aftur inn í þessi view.
+
+
 * Nota HotelFinder og HotelBooker
     Þessir klasar eru ekki til akkurat þessa stundina. Ég get samt sagt ykkur hvernig þetta verður:
 
