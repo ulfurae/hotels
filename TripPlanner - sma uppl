@@ -1,0 +1,30 @@
+Til að integrate-a kerfin okkar eru tvær leiðir færar:
+
+
+* Implementa Jpanela leið
+    þið gerið þá 3-4 view sem að implementa interface-in sem ég sýndi þér í tíma.
+    Þau má finna í möppunni /src/HotelSearch/Presentation/Interfaces og eru:
+        - IMainView
+        - ISearchPanel
+        - IResultPanel
+        - IResultListPanel
+    Ef þið farið þessa leið veriði í bandi við mig á fb Halldór Reynir Tryggvason
+    eða á gmail halldorr@gmail.com. Þetta er kannski að fara að breytast smá núna á
+    næstu dögum svo það er mikilvægt að við séum í sync.
+    Ykkur ætti þó að vera óhætt að útfæra ISearchPanel, hann mun ekki breytast.
+
+* Nota HotelFinder og HotelBooker
+    Þessir klasar eru ekki til akkurat þessa stundina. Ég get samt sagt ykkur hvernig þetta verður:
+
+    -HotelFinder:
+        Þar verður public fall sem heitir FindHotels()
+        Þið sendið inn klasann HotelSearchFilter, ath. hann extendar hotelInfo svo þar eru fleiri
+        field sem þarf að fylla út.
+        Til baka fáið þið list<Hotel>, Hotel er klasi frá okkur.
+        Þið finnið þessa klasa í src/HotelSearch/Classes/
+
+    -HotelBooker
+        Þetta er ekki 100% ákveðið en ég uppfæri skrána um leið og við erum viss.
+
+
+Kostir við jPanel leið: Þið þurfið ekki að útfæra jafn mikið
