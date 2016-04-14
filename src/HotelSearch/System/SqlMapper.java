@@ -116,19 +116,4 @@ public class SqlMapper {
 
         return roomList;
     }
-
-
-
-    public static <TOut> List<TOut> ToHotel(ResultSet rs) {
-        try {
-            while (rs.next()) {
-
-            }
-        } catch (SQLException e) {
-
-        }
-
-        return (List<TOut>) rs;
-    }
-
 }

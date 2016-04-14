@@ -46,26 +46,25 @@ public class MainViewPresenter {
         state = ns;
     }
 
-    public void loadView(List<Hotel> params) {
+    public void loadView(List<Hotel> hotels) {
         _bookHotelPanel.getView().setVisible(false);
         _resultPanel.getView().setVisible(true);
         _searchPanel.getView().setVisible(true);
 
-
-        switch(state) {
+        switch (state) {
             case Search:
                 // Initialize and load view
                 View.addComponent(_searchPanel);
-                new SearchPanelPresenter(_searchPanel, this);
+                new SearchPanelPresenter(_searchPanel, this::loadView);
                 // update program state
                 state = ProgramState.Result;
                 break;
             case Result:
                 // remove previous hotels in result panel
-                if(params!=null) _resultPanel.removeHotels();
+                if (hotels != null) _resultPanel.removeHotels();
                 // Initialize and load view
                 View.addComponent(_resultPanel);
-                new ResultPanelPresenter(_resultPanel, this, params);
+                new ResultPanelPresenter(_resultPanel, this, hotels);
                 break;
             case Back:
                 state = ProgramState.Result;
@@ -75,9 +74,7 @@ public class MainViewPresenter {
 
     public void loadBookHotelView(Hotel params1, List<Room> params2) {
         switch(state) {
-
             case Book:
-
                 _searchPanel.getView().setVisible(false);
                 _resultPanel.getView().setVisible(false);
                 _bookHotelPanel.getView().setVisible(true);

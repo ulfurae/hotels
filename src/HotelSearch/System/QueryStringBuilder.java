@@ -33,7 +33,6 @@ public class QueryStringBuilder {
         dateIn = "'" + dateIn + "'";
         dateOut = "'" + dateOut + "'";
 
-
         String updateQuery = "DROP TABLE IF EXISTS tmpBooked;\n" +
                 "CREATE TEMPORARY TABLE tmpBooked (\n" +
                 "\thotel_id int,\n" +
@@ -88,7 +87,6 @@ public class QueryStringBuilder {
     }
 
     public List<String> makeHotelRoomsQuery(String hotel_id) {
-
 
         String updateQuery = "DROP TABLE IF EXISTS tmpRoomBooked;\n" +
                 "CREATE TEMPORARY TABLE tmpRoomBooked (\n" +

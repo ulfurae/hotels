@@ -25,7 +25,5 @@ public class MainView extends JFrame implements IMainView {
 
     public void addComponent(IView view) {
         mp.add(view.getView());
-        //mainFrame.pack();
-        //mainFrame.setVisible(true);
     }
 }
