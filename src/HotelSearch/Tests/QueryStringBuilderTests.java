@@ -28,6 +28,7 @@ public class QueryStringBuilderTests {
     private HotelSearchFilter filter2;
     private HotelSearchFilter filter3;
     private HotelSearchFilter threeNonDefaultValueFilter;
+    private HotelSearchFilter emptyFilter;
 
     private Date dateIn;
     private Date dateOut;
@@ -74,6 +75,8 @@ public class QueryStringBuilderTests {
         threeNonDefaultValueFilter.breakfast = false;
         threeNonDefaultValueFilter.areaId = 2;
         threeNonDefaultValueFilter.rating = 3.5;
+
+        emptyFilter = new HotelSearchFilter();
     }
 
     @After
@@ -82,6 +85,7 @@ public class QueryStringBuilderTests {
         filter2 = null;
         filter3 = null;
         threeNonDefaultValueFilter = null;
+        emptyFilter = null;
 
         query = null;
         resolver = null;
@@ -116,7 +120,7 @@ public class QueryStringBuilderTests {
         query = QueryStringBuilder.getSQLQueryString(filter2, resolver);
 
         String qString = "select * from Hotel where (`wifi` = ? and `smoking` = ? and `rating` >= ? and `areaid` = ?)";
-        List<Object> val = Arrays.asList(true, true, filter2.rating, filter2.areaId);
+        List<Object> val = Arrays.asList(filter2.wifi, filter2.smoking, filter2.rating, filter2.areaId);
 
         assertEquals(val, query.values);
         assertEquals(qString, query.sqlStatement);
@@ -138,5 +142,14 @@ public class QueryStringBuilderTests {
         query = QueryStringBuilder.getSQLQueryString(threeNonDefaultValueFilter, resolver);
 
         assertEquals(3, query.values.size());
+    }
+
+    @Test
+    public void noFieldsHaveValueShoulReturnSelectAll() {
+        query = QueryStringBuilder.getSQLQueryString(new HotelSearchFilter(), resolver);
+
+        String qString = "select * from Hotel";
+
+        assertEquals(qString, query.sqlStatement);
     }
 }
