@@ -1,18 +1,9 @@
 package HotelSearch.Presentation.Interfaces;
 
-import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
-/**
- * Created by Halldor on 22/03/16.
- */
 public interface ISearchPanel extends IView {
-
-    String getHotelName();
-
-    int getAreaId();
-
     String getAreaName();
 
     boolean getWifi();
@@ -24,6 +15,12 @@ public interface ISearchPanel extends IView {
     Date getDateIn();
 
     Date getDateOut();
+
+    void setDateOut(Date dateOut);
+
+    void setDateInAction(ActionListener evt);
+
+    void setDateOutAction(ActionListener evt);
 
     void setSearchBtnAction(ActionListener evt);
 }

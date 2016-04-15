@@ -1,84 +1,89 @@
 package HotelSearch.Presentation.Presenters;
 
 import HotelSearch.Classes.Hotel;
-import HotelSearch.Classes.HotelSearchFilter;
-import HotelSearch.Classes.SqlCustomQuery;
-import HotelSearch.Demo.MockRepo;
-import HotelSearch.Presentation.Interfaces.IResultPanel;
 import HotelSearch.Presentation.Interfaces.ISearchPanel;
 import HotelSearch.System.DbUtils;
 import HotelSearch.System.QueryStringBuilder;
 import HotelSearch.System.SqlMapper;
-
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.List;
 
-/**
- * Created by Halldor on 22/03/16.
- */
 public class SearchPanelPresenter{
+    //<editor-fold desc="Declaration & Initialization">
 
     private Consumer _callback;
-    public ISearchPanel View;
+    private ISearchPanel View;
 
     public SearchPanelPresenter(ISearchPanel view, Consumer<List<Hotel>> callback) {
         _callback = callback;
         View = view;
 
-        Initialize();
+        initializeView();
     }
 
-    private void Initialize() {
+    private void initializeView() {
         View.setSearchBtnAction(new searchBtnAction());
+        View.setDateInAction(new dpInAction());
+        View.setDateOutAction(new dpOutAction());
     }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Private">
 
     private void display(List<Hotel> hotels) {
         _callback.accept(hotels);
     }
 
+    private List<Hotel> getHotels() {
+        String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
+        String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
+
+        List<String> sendList = new ArrayList<>();
+        sendList.add(View.getAreaName());
+        sendList.add(din);
+        sendList.add(dout);
+
+        List<String>  queryList = new QueryStringBuilder().makeSearchHotelsQuery(sendList);
+
+        ResultSet results = new DbUtils().SearchDB(queryList);
+
+        return new SqlMapper().mapHotelSearch(results);
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Event Handlers">
+
     class searchBtnAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //getHotels();
-            //filter.areaId = View.getAreaId();
-            String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
-            String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
-
-            List<String> sendList = new ArrayList<String>();
-            sendList.add(View.getAreaName());
-            sendList.add(din);
-            sendList.add(dout);
-
-            List<String>  queryList = new QueryStringBuilder().makeSearchHotelsQuery(sendList);
-
-            ResultSet results = new DbUtils().SearchDB(queryList);
-
-            List<Hotel> hotels = new SqlMapper().mapHotelSearch(results);
-
+            List<Hotel> hotels = getHotels();
             display(hotels);
         }
     }
 
-    private void getHotels() {
-        HotelSearchFilter filter = new HotelSearchFilter();
-        // Todo : Finna út úr area combo box
-//        filter.areaId = View.getAreaId();
-
-        filter.breakfast = View.getBreakfast();
-        filter.smoking = View.getSmoking();
-        filter.wifi = View.getWifi();
-
-        filter.dateIn = new Date(View.getDateIn().getTime());
-        filter.dateOut = new Date(View.getDateOut().getTime());
-
-        MockRepo mock = new MockRepo();
-        List<Hotel> hotels = mock.getHotels(filter);
-        display(hotels);
+    class dpInAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if(View.getDateOut().before(View.getDateIn())) {
+                View.setDateOut(View.getDateIn());
+            }
+        }
     }
+
+    class dpOutAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if(View.getDateOut().before(View.getDateIn())) {
+                JOptionPane.showMessageDialog(null, "Can't select date prior to check-in date");
+                View.setDateOut(View.getDateIn());
+            }
+        }
+    }
+
+    //</editor-fold>
 }
