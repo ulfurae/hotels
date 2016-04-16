@@ -1,23 +1,16 @@
 package HotelSearch.Presentation.Presenters;
 
 import HotelSearch.Classes.Hotel;
-import HotelSearch.Classes.Room;
 import HotelSearch.Presentation.Interfaces.IBookHotelPanel;
 import HotelSearch.Presentation.Interfaces.IMainView;
 import HotelSearch.Presentation.Interfaces.IResultPanel;
 import HotelSearch.Presentation.Interfaces.ISearchPanel;
-import org.jooq.util.derby.sys.Sys;
-
-import javax.swing.*;
 import java.util.List;
 
-/**
- * Created by Halldor on 22/03/16.
- */
 public class MainViewPresenter {
-    ProgramState state;
+    //<editor-fold desc="Declaration & Initialization">
 
-    public IMainView View;
+    private IMainView View;
     private ISearchPanel _searchPanel;
     private ISearchPanel _sideSearchPanel;
     private IResultPanel _resultPanel;
@@ -31,58 +24,44 @@ public class MainViewPresenter {
         _resultPanel = resultP;
         _bookHotelPanel = bookHotelP;
 
-        initialize();
+        initializeView();
     }
 
-    private void initialize() {
-        // Initialize program State that governs loadView()
-        state = ProgramState.Search;
-
-        // load the view
-        loadView(null);
+    private void initializeView() {
+        View.addComponent(_searchPanel);
+        new SearchPanelPresenter(_searchPanel, this::searchPanelCallback);
     }
 
-    public void setState(ProgramState ns) {
-        state = ns;
+    //</editor-fold>
+
+    //<editor-fold desc="Private">
+
+    private void updateViewVisibility(boolean booking) {
+        _bookHotelPanel.getView().setVisible(booking);
+        _resultPanel.getView().setVisible(!booking);
+        _searchPanel.getView().setVisible(!booking);
     }
 
-    public void loadView(List<Hotel> hotels) {
-        _bookHotelPanel.getView().setVisible(false);
-        _resultPanel.getView().setVisible(true);
-        _searchPanel.getView().setVisible(true);
+    //</editor-fold>
 
-        switch (state) {
-            case Search:
-                // Initialize and load view
-                View.addComponent(_searchPanel);
-                new SearchPanelPresenter(_searchPanel, this::loadView);
-                // update program state
-                state = ProgramState.Result;
-                break;
-            case Result:
-                // remove previous hotels in result panel
-                if (hotels != null) _resultPanel.removeHotels();
-                // Initialize and load view
-                View.addComponent(_resultPanel);
-                new ResultPanelPresenter(_resultPanel, this, hotels);
-                break;
-            case Back:
-                state = ProgramState.Result;
-                break;
-        }
+    //<editor-fold desc="View Callbacks">
+
+    private void searchPanelCallback(List<Hotel> hotels) {
+        _resultPanel.removeHotels();
+        View.addComponent(_resultPanel);
+        new ResultPanelPresenter(_resultPanel, this::resultPanelCallback, hotels);
+        updateViewVisibility(false);
     }
 
-    public void loadBookHotelView(Hotel params1, List<Room> params2) {
-        switch(state) {
-            case Book:
-                _searchPanel.getView().setVisible(false);
-                _resultPanel.getView().setVisible(false);
-                _bookHotelPanel.getView().setVisible(true);
-
-                // Initialize and load view
-                View.addComponent(_bookHotelPanel);
-                new BookHotelPanelPresenter(_bookHotelPanel, this, params1, params2);
-                break;
-        }
+    private void resultPanelCallback(Hotel hotel) {
+        View.addComponent(_bookHotelPanel);
+        new BookHotelPanelPresenter(_bookHotelPanel, this::bookingPanelCallback, hotel);
+        updateViewVisibility(true);
     }
+
+    private void bookingPanelCallback(boolean backPressed, Hotel hotel) {
+        updateViewVisibility(!backPressed);
+    }
+
+    //</editor-fold>
 }

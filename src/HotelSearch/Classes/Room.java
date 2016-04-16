@@ -4,9 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by Ricky Hien on 23.3.2016.
- */
 public class Room {
     public int hotelId;
     public Hotel hotel;
@@ -46,8 +43,7 @@ public class Room {
                 //bookings = new Booking();
 
                 //bookings.toBooking(results);
-
-        }
+            }
 
         } catch (SQLException e) { e.printStackTrace(); }
 

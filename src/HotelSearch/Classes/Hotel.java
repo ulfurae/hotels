@@ -3,19 +3,15 @@ package HotelSearch.Classes;
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ricky Hien on 23.3.2016.
- */
 public class Hotel {
     public int id;
     public String name;
     public ImageIcon picture;
     public Review reviews;
     public Area area;
-    public Room rooms;
+    public List<Room> rooms;
     public HotelInfo hotelInfo;
     public String description;
 /**
@@ -63,9 +59,10 @@ public class Hotel {
                 area.city = results.getString("city");
                 area.airportName = results.getString("airport");
 
-                rooms = new Room();
 
-                rooms.toRoom(results);
+                Room room = new Room();
+                room.toRoom(results);
+                rooms.add(room);
 
                 reviews = new Review();
 

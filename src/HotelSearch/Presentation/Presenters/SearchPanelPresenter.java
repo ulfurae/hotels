@@ -17,7 +17,7 @@ import java.util.List;
 public class SearchPanelPresenter{
     //<editor-fold desc="Declaration & Initialization">
 
-    private Consumer _callback;
+    private Consumer<List<Hotel>> _callback;
     private ISearchPanel View;
 
     public SearchPanelPresenter(ISearchPanel view, Consumer<List<Hotel>> callback) {

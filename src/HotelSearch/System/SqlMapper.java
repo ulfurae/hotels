@@ -9,15 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
 
-/**
- * Created by Halldor on 16/03/16.
- */
 public class SqlMapper {
 
     public List<Hotel> mapHotelSearch(ResultSet results)  {
 
 
-        List<Hotel> hotelList = new ArrayList<Hotel>();
+        List<Hotel> hotelList = new ArrayList<>();
         ArrayList<Hotel> hot = new ArrayList<>();
 
         int i = 0;
@@ -28,11 +25,12 @@ public class SqlMapper {
                 hot.get(i).picture = getImage(results.getString("picture"));
                 hot.get(i).name = results.getString("name");
                 hot.get(i).id = results.getInt("id");
-                hot.get(i).description = results.getString("description").substring(0,130) + "...";
+                hot.get(i).description = results.getString("description");
 
                 hot.get(i).hotelInfo = new HotelInfo();
                 hot.get(i).hotelInfo.areaId = results.getInt("area_id");
                 hot.get(i).hotelInfo.breakfast = results.getBoolean("breakfast");
+                hot.get(i).hotelInfo.wifi = results.getBoolean("wifi");
                 hot.get(i).hotelInfo.rating = 4.7;
 
                 hot.get(i).area = new Area();
@@ -88,7 +86,7 @@ public class SqlMapper {
 
     public List<Room> mapHotelRooms(ResultSet results)  {
 
-        List<Room> roomList = new ArrayList<Room>();
+        List<Room> roomList = new ArrayList<>();
         ArrayList<Room> room = new ArrayList<>();
 
         int i = 0;

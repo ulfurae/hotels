@@ -2,21 +2,17 @@ package HotelSearch.Presentation.Views;
 
 import HotelSearch.Classes.HotelInfo;
 import HotelSearch.Presentation.Interfaces.IBookHotelPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 
-/**
- * Created by ulfurae on 11.4.2016.
- */
 public class BookHotelPanel implements IBookHotelPanel {
 
     private JPanel picturePanel;
     private JPanel pnlHotelPhoto;
     private JPanel infoPanel;
-    private JList jlHotelInfo;
+    private JList<String> jlHotelInfo;
     private JTextPane txtHotelDescription;
     private JLabel lblHotelName;
     private JLabel lblHotelCity;
@@ -35,13 +31,14 @@ public class BookHotelPanel implements IBookHotelPanel {
     }
 
     public void setHotelName(String name) { lblHotelName.setText(name); }
+
     public void setHotelAreaName(String area) {
         lblAreaName.setText(area);
     }
+
     public void setHotelCity(String area) { lblHotelCity.setText("- " + area);  }
 
     public void setHotelPicture(ImageIcon img) {
-
         pnlHotelPhoto.removeAll();
         int scale = 2; // 2 times smaller
         int width = img.getIconWidth();
@@ -59,20 +56,20 @@ public class BookHotelPanel implements IBookHotelPanel {
     }
 
     public void setHotelInfo(HotelInfo hotelInfo) {
-        DefaultListModel model = new DefaultListModel();
+        DefaultListModel<String> model = new DefaultListModel<>();
 
         Field[] fields = hotelInfo.getClass().getFields();
 
         for (Field f: fields) {
             try {
-                model.addElement(f.getName().toString() + ": " + f.get(hotelInfo).toString());
+                model.addElement(f.getName() + ": " + f.get(hotelInfo).toString());
 
-            } catch(Exception e) { }
+            } catch(Exception e) { e.printStackTrace(); }
         }
         jlHotelInfo.setModel(model);
     }
 
     public void setBackBtnAction(ActionListener evt) {
         btnBack.addActionListener(evt);
-    };
+    }
 }
