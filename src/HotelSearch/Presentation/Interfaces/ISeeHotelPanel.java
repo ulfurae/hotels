@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by ulfurae on 11.4.2016.
  */
-public interface IBookHotelPanel extends IView {
+public interface ISeeHotelPanel extends IView {
 
 
     void setHotelName(String name);
@@ -26,6 +26,6 @@ public interface IBookHotelPanel extends IView {
 
     void setBackBtnAction(ActionListener evt);
 
-    //void setBtnName(String id);
+    void setBookBtnAction(ActionListener evt);
 
 }

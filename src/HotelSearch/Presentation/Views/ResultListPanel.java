@@ -21,8 +21,6 @@ public class ResultListPanel implements IResultListPanel {
 
     public ResultListPanel() {
         pnlHotelPhoto.setLayout(new GridLayout(0,1));
-        btnBooking.setText("See hotel");
-        btnBooking.setBackground(new Color(95,95,95));
     }
 
     public JPanel getView() {
@@ -38,9 +36,9 @@ public class ResultListPanel implements IResultListPanel {
     }
 
     public void setHotelPicture(ImageIcon img) {
-        int scale = 3; // 2 times smaller
+
         int width = img.getIconWidth();
-        int newWidth = width / scale;
+        int newWidth = width / 3;
 
         JLabel label = new JLabel("", new ImageIcon(img.getImage().getScaledInstance(newWidth, -1,
                 java.awt.Image.SCALE_SMOOTH)), JLabel.CENTER);

@@ -4,10 +4,7 @@ import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import HotelSearch.Presentation.Presenters.MainViewPresenter;
-import HotelSearch.Presentation.Views.BookHotelPanel;
-import HotelSearch.Presentation.Views.SearchPanel;
-import HotelSearch.Presentation.Views.MainView;
-import HotelSearch.Presentation.Views.ResultPanel;
+import HotelSearch.Presentation.Views.*;
 
 
 /**
@@ -22,7 +19,8 @@ public class program {
                                                             new SearchPanel(),
                                                             new SearchPanel(),
                                                             new ResultPanel(),
-                                                            new BookHotelPanel());
+                                                            new SeeHotelPanel(),
+                                                            new BookRoomPanel());
     }
 
     static void setLook() {

@@ -25,10 +25,8 @@ public class QueryStringBuilder {
         dateIn = input.get(1);
         dateOut = input.get(2);
 
-        if(area=="All areas")
-            area = "IS NOT NULL" ;
-        else
-            area = "= '" + area + "'";
+        if(area=="All areas") area = "IS NOT NULL" ;
+        else area = "= '" + area + "'";
 
         dateIn = "'" + dateIn + "'";
         dateOut = "'" + dateOut + "'";
@@ -60,12 +58,8 @@ public class QueryStringBuilder {
                 "and a.name " + area  + "\n" +
                 "group by h.id;";
 
-        //System.out.println(mainQuery);
+        return returnList(mainQuery,updateQuery);
 
-        List<String> sendList = new ArrayList<String>();
-        sendList.add(mainQuery);
-        sendList.add(updateQuery);
-        return sendList;
     }
 
     public List<String> makeHotelInfoQuery(String hotel_id) {
@@ -79,11 +73,8 @@ public class QueryStringBuilder {
                         "Where h.area_id = a.id\n" +
                         "and h.id = " + hotel_id;
 
+        return returnList(mainQuery,updateQuery);
 
-        List<String> sendList = new ArrayList<String>();
-        sendList.add(mainQuery);
-        sendList.add(updateQuery);
-        return sendList;
     }
 
     public List<String> makeHotelRoomsQuery(String hotel_id) {
@@ -113,16 +104,16 @@ public class QueryStringBuilder {
                         "\t(Select concat(hotel_id,room_number) from tmpRoomBooked)\n" +
                         "and h.id = " + hotel_id + ";";
 
-        //System.out.println(mainQuery);
-
-        List<String> sendList = new ArrayList<String>();
-        sendList.add(mainQuery);
-        sendList.add(updateQuery);
-        return sendList;
+        return returnList(mainQuery,updateQuery);
     }
 
 
-
+    private  List<String> returnList(String a, String b) {
+        List<String> sendList = new ArrayList<String>();
+        sendList.add(a);
+        sendList.add(b);
+        return sendList;
+    }
 
 
 

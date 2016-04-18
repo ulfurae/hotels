@@ -35,10 +35,10 @@ public class DbUtils {
             }
 
             stat1 = con.prepareStatement(queryList.get(0));
+            // the query is executed and the result is put into resultSet
             resultSet = stat1.executeQuery();
             //stat.setString(1, QueryString);
 
-            // the query is executed and the result is put into resultSet
 
 
         } catch (SQLException ex) {

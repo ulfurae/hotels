@@ -1,13 +1,14 @@
 package HotelSearch.Presentation.Views;
 
 import HotelSearch.Classes.HotelInfo;
-import HotelSearch.Presentation.Interfaces.IBookHotelPanel;
+import HotelSearch.Presentation.Interfaces.ISeeHotelPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 
-public class BookHotelPanel implements IBookHotelPanel {
+public class SeeHotelPanel implements ISeeHotelPanel {
 
     private JPanel picturePanel;
     private JPanel pnlHotelPhoto;
@@ -19,11 +20,10 @@ public class BookHotelPanel implements IBookHotelPanel {
     private JButton btnBack;
     private JPanel bookHotelPanel;
     private JLabel lblAreaName;
+    private JButton btnBook;
 
-    public BookHotelPanel() {
+    public SeeHotelPanel() {
         pnlHotelPhoto.setLayout(new GridLayout(0,1));
-        btnBack.setText("<- Back");
-        btnBack.setBackground(new Color(95,95,95));
     }
 
     public JComponent getView() {
@@ -71,5 +71,9 @@ public class BookHotelPanel implements IBookHotelPanel {
 
     public void setBackBtnAction(ActionListener evt) {
         btnBack.addActionListener(evt);
+    }
+
+    public void setBookBtnAction(ActionListener evt) {
+        btnBook.addActionListener(evt);
     }
 }
