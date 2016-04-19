@@ -1,10 +1,7 @@
 package HotelSearch.Presentation.Interfaces;
 
-import HotelSearch.Classes.HotelInfo;
 import HotelSearch.Classes.Room;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -32,6 +29,8 @@ public interface IBookRoomPanel extends IView {
     void displayBookingResults();
 
     void displayBookingError();
+
+    String getSelectedRoomType();
 
     //void setBtnName(String id);
 

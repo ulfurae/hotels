@@ -52,17 +52,30 @@ public class BookRoomPanel implements IBookRoomPanel {
 
     public String getGuestName() { return nameInput.getText(); }
 
-    public int getGuestSSN() {return Integer.parseInt(ssnInput.getText()); }
+    public int getGuestSSN() {
+
+        if ((ssnInput.getText().isEmpty())) {
+            return 0;
+        } else {
+            return Integer.parseInt(ssnInput.getText());
+        }
+    }
 
     public void displayBookingResults() {
 
         String name = getGuestName();
 
-        bookingResult.setText("Booking Successful! Enjoy your stay " + name + ".");
+        String room = getSelectedRoomType();
+
+        if (room == null) {
+            displayBookingError();
+        } else {
+            bookingResult.setText("Booking Successful! Enjoy your stay in a " + room + ", " + name + ".");
+        }
     }
 
     public void displayBookingError() {
-        bookingResult.setText("There was a problem with your booking.");};
+        bookingResult.setText("Please make sure all fields are filled out.");};
 
     public void setRoomsAvailable(List<Room> room) {
 
@@ -89,6 +102,8 @@ public class BookRoomPanel implements IBookRoomPanel {
             bg.add(roomType3);
             bg.add(roomType4);
 
+
+
             // Guest info form
             infoRequest.setText("Please fill out the following form: " + "\n\n");
             guestName.setText("Name: ");
@@ -102,5 +117,18 @@ public class BookRoomPanel implements IBookRoomPanel {
     }
     public void setBookBtnAction(ActionListener evt) {
         btnBook.addActionListener(evt);
+    }
+
+    public String getSelectedRoomType() {
+        if (roomType1.isSelected()) {
+            return roomType1.getText();
+        } else if (roomType2.isSelected()) {
+            return roomType2.getText();
+        } else if (roomType3.isSelected()) {
+            return roomType3.getText();
+        } else if (roomType4.isSelected()) {
+            return roomType4.getText();
+        }
+        return null;
     }
 }

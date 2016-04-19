@@ -210,7 +210,7 @@
           </component>
           <component id="e9884" class="javax.swing.JTextArea" binding="ssnInput">
             <constraints>
-              <grid row="10" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="10" column="1" row-span="1" col-span="3" vsize-policy="2" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="20"/>
               </grid>
             </constraints>
