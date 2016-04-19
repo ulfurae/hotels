@@ -75,7 +75,7 @@ public class BookRoomPanel implements IBookRoomPanel {
     }
 
     public void displayBookingError() {
-        bookingResult.setText("Please make sure all fields are filled out.");};
+        bookingResult.setText("Please make sure all fields are filled out correctly.");};
 
     public void setRoomsAvailable(List<Room> room) {
 
@@ -101,8 +101,6 @@ public class BookRoomPanel implements IBookRoomPanel {
             bg.add(roomType2);
             bg.add(roomType3);
             bg.add(roomType4);
-
-
 
             // Guest info form
             infoRequest.setText("Please fill out the following form: " + "\n\n");

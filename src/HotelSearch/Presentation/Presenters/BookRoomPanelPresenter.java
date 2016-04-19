@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+
 public class BookRoomPanelPresenter {
     //<editor-fold desc="Declaration & Initialization">
 
@@ -92,9 +93,9 @@ public class BookRoomPanelPresenter {
 
                     stat1.executeUpdate(sql);
 
-                    //sql = "INSERT INTO Booking (hotel_id, date_in, date_out, room_number, guest_id) VALUES();";
+                    sql = "INSERT INTO Booking (hotel_id, date_in, date_out, room_number, guest_id) VALUES (3, '2016-04-22', '2016-04-29', 2, 2);";
 
-                    //stat1.executeUpdate(sql);
+                    stat1.executeUpdate(sql);
 
                     View.displayBookingResults();
                 } catch (SQLException ex) {
