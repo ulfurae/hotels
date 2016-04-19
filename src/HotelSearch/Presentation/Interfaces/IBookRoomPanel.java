@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface IBookRoomPanel extends IView {
 
+    void setHotelName(String name);
+
+    void setHotelAreaName(String area);
+
+    void setHotelCity(String area);
 
     void setRoomsAvailable(List<Room> rooms);
 

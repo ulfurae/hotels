@@ -38,6 +38,10 @@ public class SeeHotelPanel implements ISeeHotelPanel {
 
     public void setHotelCity(String area) { lblHotelCity.setText("- " + area);  }
 
+    public void removeRooms() {
+        //
+    }
+
     public void setHotelPicture(ImageIcon img) {
         pnlHotelPhoto.removeAll();
         int scale = 2; // 2 times smaller

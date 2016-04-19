@@ -44,19 +44,13 @@ public class ResultListPanelPresenter {
         _callback.accept(hotel);
     }
 
-    private List<Room> getRooms() {
-        List<String>  queryList = new QueryStringBuilder().makeHotelRoomsQuery(Integer.toString(_model.id));
-        ResultSet results = new DbUtils().SearchDB(queryList);
-        return new SqlMapper().mapHotelRooms(results);
-    }
-
     //</editor-fold>
 
     //<editor-fold desc="Event Handlers">
 
     class btnAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            _model.rooms = getRooms();
+
             display(_model);
         }
     }

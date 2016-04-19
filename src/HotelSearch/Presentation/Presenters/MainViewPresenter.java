@@ -3,6 +3,7 @@ package HotelSearch.Presentation.Presenters;
 import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.Room;
 import HotelSearch.Presentation.Interfaces.*;
+import HotelSearch.Presentation.Views.SeeHotelPanel;
 
 import java.util.List;
 
@@ -42,7 +43,6 @@ public class MainViewPresenter {
         _searchPanel.getView().setVisible(!booking);
 
          _seeHotelPanel.getView().setVisible(booking);
-        _bookRoomPanel.getView().setVisible(booking);
     }
 
     //</editor-fold>
@@ -56,20 +56,37 @@ public class MainViewPresenter {
         updateViewVisibility(false);
     }
 
+    boolean shMade = false;
+    SeeHotelPanelPresenter sh;
     private void resultPanelCallback(Hotel hotel) {
-        View.addComponent( _seeHotelPanel);
-        new SeeHotelPanelPresenter( _seeHotelPanel, this::seeHotelPanelCallback, hotel);
+
+        if(!shMade) {
+            View.addComponent(_seeHotelPanel);
+            sh = new SeeHotelPanelPresenter(_seeHotelPanel, this::seeHotelPanelCallback, hotel);
+            shMade = true;
+
+        }
+        else sh.update(hotel);
+
         updateViewVisibility(true);
     }
 
 
 
-    private void seeHotelPanelCallback(boolean backPressed, List<Room> room) {
+    boolean brMade = false;
+    BookRoomPanelPresenter br;
+    private void seeHotelPanelCallback(boolean backPressed, Hotel hotel) {
         if(backPressed)
             updateViewVisibility(!backPressed);
         else {
-            View.addComponent(_bookRoomPanel);
-            new BookRoomPanelPresenter( _bookRoomPanel, this::bookRoomPanelCallback, room);
+
+            if(!brMade) {
+                View.addComponent(_bookRoomPanel);
+                br = new BookRoomPanelPresenter( _bookRoomPanel, this::bookRoomPanelCallback, hotel);
+                brMade = true;
+            }
+            else br.update(hotel);
+
              _seeHotelPanel.getView().setVisible(false);
              _bookRoomPanel.getView().setVisible(true);
         }
@@ -77,7 +94,10 @@ public class MainViewPresenter {
 
 
 
-    private void bookRoomPanelCallback(boolean backPressed, List<Room> room) { updateViewVisibility(true); }
+    private void bookRoomPanelCallback(boolean backPressed, List<Room> room) {
+        _seeHotelPanel.getView().setVisible(true);
+        _bookRoomPanel.getView().setVisible(false);
+    }
 
     //</editor-fold>
 }

@@ -19,17 +19,28 @@ public class BookRoomPanelPresenter {
     private Hotel _model;
     private List<Room> _rooms;
 
-    public BookRoomPanelPresenter(IBookRoomPanel view, BiConsumer<Boolean,List<Room>> callback, List<Room> rooms) {
+    public BookRoomPanelPresenter(IBookRoomPanel view, BiConsumer<Boolean,List<Room>> callback, Hotel model) {
         View = view;
         _callback = callback;
-        _rooms = rooms;
+        _model = model;
 
+        initializeView();
+
+        View.setBackBtnAction(new backBtnAction());
+    }
+
+    public void update(Hotel model) {
+        _model = model;
         initializeView();
     }
 
     private void initializeView() {
-        View.setRoomsAvailable(_rooms);
-        View.setBackBtnAction(new backBtnAction());
+
+        View.setHotelCity(_model.area.city);
+        View.setHotelAreaName(_model.area.name);
+        View.setHotelName(_model.name);
+
+        View.setRoomsAvailable(_model.rooms);
     }
 
     //</editor-fold>
@@ -41,6 +52,8 @@ public class BookRoomPanelPresenter {
             _callback.accept(true, null);
         }
     }
+
+
 
     //</editor-fold>
 }

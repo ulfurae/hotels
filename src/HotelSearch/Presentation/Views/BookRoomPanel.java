@@ -32,9 +32,19 @@ public class BookRoomPanel implements IBookRoomPanel {
         return bookRoomPanel;
     }
 
+    public void setHotelName(String name) { lblHotelName.setText(name); }
+
+    public void setHotelAreaName(String area) {
+        lblAreaName.setText(area);
+    }
+
+    public void setHotelCity(String area) { lblHotelCity.setText("- " + area);  }
+
     public void setRoomsAvailable(List<Room> room) {
+        txtHotelDescription.setText("");
         for(Room r: room){
-            txtHotelDescription.setText(String.valueOf(r.roomType));
+            String t = txtHotelDescription.getText();
+            txtHotelDescription.setText("- " + r.roomType.name + "\n" + t);
         }
     }
 

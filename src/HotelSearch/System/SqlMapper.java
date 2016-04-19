@@ -106,7 +106,7 @@ public class SqlMapper {
                 room.get(i).roomType.max_capacity = results. getInt("max_capacaty");
                 roomList.add(room.get(i));
 
-                System.out.println(room.get(i).roomType.name);
+                //System.out.println(room.get(i).roomType.name);
                 i++;
             }
 

@@ -66,6 +66,7 @@ public class SearchPanelPresenter{
             List<Hotel> hotels = getHotels();
             display(hotels);
         }
+
     }
 
     class dpInAction implements ActionListener {

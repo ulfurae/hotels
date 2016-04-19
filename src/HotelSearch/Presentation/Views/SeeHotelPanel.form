@@ -102,6 +102,7 @@
                   <horizontalTextPosition value="11"/>
                   <iconTextGap value="0"/>
                   <margin top="0" left="0" bottom="0" right="0"/>
+                  <multiClickThreshhold value="1"/>
                   <requestFocusEnabled value="true"/>
                   <text value="&lt;html&gt;Book&lt;br /&gt;room&lt;/html&gt;"/>
                   <verticalTextPosition value="0"/>

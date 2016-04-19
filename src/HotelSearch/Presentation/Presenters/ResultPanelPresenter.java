@@ -39,6 +39,7 @@ public class ResultPanelPresenter {
     //<editor-fold desc="Private">
 
     private void display(Hotel hotel) {
+        System.out.println("EH ");
         _callback.accept(hotel);
     }
 
