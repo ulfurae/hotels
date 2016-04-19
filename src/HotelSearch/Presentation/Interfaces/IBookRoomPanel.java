@@ -25,6 +25,14 @@ public interface IBookRoomPanel extends IView {
 
     void setBookBtnAction(ActionListener evt);
 
+    String getGuestName();
+
+    int getGuestSSN();
+
+    void displayBookingResults();
+
+    void displayBookingError();
+
     //void setBtnName(String id);
 
 }

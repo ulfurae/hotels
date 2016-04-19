@@ -1,4 +1,3 @@
-
 INSERT INTO Booking (hotel_id, date_in, date_out, room_number, status, guest_id)
 VALUES (2, '2016-04-24', '2016-04-26', 2, 1, 1);
 
