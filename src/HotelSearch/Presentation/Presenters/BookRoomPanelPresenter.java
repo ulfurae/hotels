@@ -3,31 +3,30 @@ package HotelSearch.Presentation.Presenters;
 import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.Room;
 import HotelSearch.Presentation.Interfaces.IBookRoomPanel;
-
+import HotelSearch.System.HotelBooker;
+import com.sun.tools.javac.util.Pair;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.function.BiConsumer;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
+import java.util.function.Supplier;
 
 public class BookRoomPanelPresenter {
     //<editor-fold desc="Declaration & Initialization">
 
     private IBookRoomPanel View;
     private BiConsumer<Boolean,List<Room>> _callback;
+    private Supplier<Pair<Date,Date>> _dateCallback;
     private Hotel _model;
     private List<Room> _rooms;
 
-    public BookRoomPanelPresenter(IBookRoomPanel view, BiConsumer<Boolean,List<Room>> callback, Hotel model) {
+    public BookRoomPanelPresenter(IBookRoomPanel view, BiConsumer<Boolean,List<Room>> callback, Supplier<Pair<Date, Date>> getDates, Hotel model) {
         View = view;
         _callback = callback;
+        _dateCallback = getDates;
         _model = model;
 
         initializeView();
@@ -42,11 +41,10 @@ public class BookRoomPanelPresenter {
     }
 
     private void initializeView() {
-
+        View.clear();
         View.setHotelCity(_model.area.city);
         View.setHotelAreaName(_model.area.name);
         View.setHotelName(_model.name);
-
         View.setRoomsAvailable(_model.rooms);
     }
 
@@ -62,55 +60,44 @@ public class BookRoomPanelPresenter {
 
     class bookBtnAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            Pair<Date,Date> datePair = _dateCallback.get();
 
-            String nameGuest = View.getGuestName();
-            int ssnGuest =  View.getGuestSSN();
-            String room = View.getSelectedRoomType();
+            String guestName = View.getGuestName();
+            int ssnGuest = View.getGuestSSN();
+            Room room = getRoomOfType(View.getSelectedRoomType());
+            Date dateIn = datePair.fst;
+            Date dateOut = datePair.snd;
 
-            System.out.println(nameGuest + "\n" + ssnGuest);
-
-            // info to connect to MySQL database
-            final String mysqlUrl = "jdbc:mysql://localhost:3306/hotelDB?allowMultiQueries=true";
-            final String mysqlUser = "root";
-            final String mysqlPass = "mculli";
+            System.out.println(dateIn);
+            System.out.println(dateOut);
 
             Connection con = null;
             Statement stat1 = null;
 
-            if (room == null || nameGuest == null || ssnGuest == 0) {
+            if (room == null || guestName == null || ssnGuest == 0) {
 
                 View.displayBookingError();
 
             } else {
-
-                try {
-                    // connection made to the database
-                    con = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
-
-                    stat1 = con.createStatement();
-
-                    String sql = "INSERT INTO Guest (name, ssn) VALUES ('" + nameGuest + "'," + ssnGuest + ");";
-
-                    stat1.executeUpdate(sql);
-
-                    sql = "INSERT INTO Booking (hotel_id, date_in, date_out, room_number, guest_id) VALUES (3, '2016-04-22', '2016-04-29', 2, 2);";
-
-                    stat1.executeUpdate(sql);
-
-                    View.displayBookingResults();
-                } catch (SQLException ex) {
+                boolean success = HotelBooker.bookHotel(guestName, ssnGuest, dateIn, dateOut, room);
+                System.out.println(success);
+                if (!success)
                     View.displayBookingError();
-                    Logger lgr = Logger.getLogger(BookRoomPanelPresenter.class.getName());
-                    lgr.log(Level.SEVERE, ex.getMessage(), ex);
-
-                }
+                else
+                    View.displayBookingResults();
             }
-
-
         }
     }
 
-
+    public Room getRoomOfType(String roomTypeName) {
+        if(roomTypeName != null) {
+            for(int i = 0; i < _model.rooms.size(); i++) {
+                if(_model.rooms.get(i).roomType.name.compareTo(roomTypeName) == 0);
+                    return _model.rooms.get(0);
+            }
+        }
+        return null;
+    }
 
     //</editor-fold>
 }

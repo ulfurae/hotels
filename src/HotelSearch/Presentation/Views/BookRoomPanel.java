@@ -11,8 +11,6 @@ import javax.swing.ButtonGroup;
 import java.lang.String;
 
 public class BookRoomPanel implements IBookRoomPanel {
-
-
     private JPanel infoPanel;
     private JLabel lblHotelName;
     private JLabel lblHotelCity;
@@ -34,10 +32,6 @@ public class BookRoomPanel implements IBookRoomPanel {
 
     private Hotel _model;
 
-    public BookRoomPanel() {
-
-    }
-
     public JComponent getView() {
         return bookRoomPanel;
     }
@@ -53,18 +47,20 @@ public class BookRoomPanel implements IBookRoomPanel {
     public String getGuestName() { return nameInput.getText(); }
 
     public int getGuestSSN() {
+        return ssnInput.getText().isEmpty() ? 0 : Integer.parseInt(ssnInput.getText());
+    }
 
-        if ((ssnInput.getText().isEmpty())) {
-            return 0;
-        } else {
-            return Integer.parseInt(ssnInput.getText());
-        }
+    public void clear() {
+        nameInput.setText("");
+        ssnInput.setText("");
+        roomType1.setSelected(false);
+        roomType2.setSelected(false);
+        roomType3.setSelected(false);
+        roomType4.setSelected(false);
     }
 
     public void displayBookingResults() {
-
         String name = getGuestName();
-
         String room = getSelectedRoomType();
 
         if (room == null) {
@@ -75,39 +71,39 @@ public class BookRoomPanel implements IBookRoomPanel {
     }
 
     public void displayBookingError() {
-        bookingResult.setText("Please make sure all fields are filled out correctly.");};
+        bookingResult.setText("Please make sure all fields are filled out correctly.");
+    }
 
     public void setRoomsAvailable(List<Room> room) {
+        roomDesc.setText("Please Choose a Room Type:" + "\n");
+        roomType1.setText("");
+        roomType2.setText("");
+        roomType3.setText("");
+        roomType4.setText("");
 
-            roomDesc.setText("Please Choose a Room Type:" + "\n");
-            roomType1.setText("");
-            roomType2.setText("");
-            roomType3.setText("");
-            roomType4.setText("");
+        ButtonGroup bg = new ButtonGroup();
 
-            ButtonGroup bg = new ButtonGroup();
+        Room r1 = room.get(0);
+        Room r2 = room.get(1);
+        Room r3 = room.get(2);
+        Room r4 = room.get(3);
 
-            Room r1 = room.get(0);
-            Room r2 = room.get(1);
-            Room r3 = room.get(2);
-            Room r4 = room.get(3);
+        roomType1.setText(r1.roomType.name + "\n");
+        roomType2.setText(r2.roomType.name + "\n");
+        roomType3.setText(r3.roomType.name + "\n");
+        roomType4.setText(r4.roomType.name + "\n");
 
-            roomType1.setText(r1.roomType.name + "\n");
-            roomType2.setText(r2.roomType.name + "\n");
-            roomType3.setText(r3.roomType.name + "\n");
-            roomType4.setText(r4.roomType.name + "\n");
+        bg.add(roomType1);
+        bg.add(roomType2);
+        bg.add(roomType3);
+        bg.add(roomType4);
 
-            bg.add(roomType1);
-            bg.add(roomType2);
-            bg.add(roomType3);
-            bg.add(roomType4);
-
-            // Guest info form
-            infoRequest.setText("Please fill out the following form: " + "\n\n");
-            guestName.setText("Name: ");
-            ssN.setText("Social Security Number: ");
-            btnBook.setText("Book Now!");
-        }
+        // Guest info form
+        infoRequest.setText("Please fill out the following form: " + "\n\n");
+        guestName.setText("Name: ");
+        ssN.setText("Social Security Number: ");
+        btnBook.setText("Book Now!");
+    }
 
 
     public void setBackBtnAction(ActionListener evt) {

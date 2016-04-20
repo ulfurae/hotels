@@ -1,7 +1,6 @@
 package HotelSearch.System;
 
 import HotelSearch.Classes.*;
-import HotelSearch.Demo.ListHotel;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -12,8 +11,6 @@ import java.sql.ResultSet;
 public class SqlMapper {
 
     public List<Hotel> mapHotelSearch(ResultSet results)  {
-
-
         List<Hotel> hotelList = new ArrayList<>();
         ArrayList<Hotel> hot = new ArrayList<>();
 
@@ -39,7 +36,6 @@ public class SqlMapper {
                 hotelList.add(hot.get(i));
                 i++;
             }
-
         } catch (SQLException e1) { e1.printStackTrace(); }
 
         return hotelList;
@@ -47,12 +43,10 @@ public class SqlMapper {
 
 
     public Hotel mapHotel(ResultSet results)  {
-
         Hotel hot = new Hotel();
 
         try {
             while(results.next()) {
-
                 hot.picture = getImage(results.getString("picture"));
                 hot.name = results.getString("name");
                 hot.id = results.getInt("id");
@@ -64,28 +58,22 @@ public class SqlMapper {
                 hot.hotelInfo.breakfast = results.getBoolean("breakfast");
                 hot.hotelInfo.rating = 4.7;
 
-
                 hot.area = new Area();
                 hot.area.id = results.getInt("area_id");
                 hot.area.name = results.getString("area_name");
                 hot.area.city = results.getString("city");
                 hot.area.airportName = results.getString("airport");
-
             }
-
         } catch (SQLException e1) { e1.printStackTrace(); }
 
         return hot;
     }
 
     public ImageIcon getImage(String name) {
-
-        return new ImageIcon(this.getClass().getResource("/pics/" + name + ".jpg"));
+        return new ImageIcon(this.getClass().getResource("/HotelSearch/pics/" + name + ".jpg"));
     }
 
-
     public List<Room> mapHotelRooms(ResultSet results)  {
-
         List<Room> roomList = new ArrayList<>();
         ArrayList<Room> room = new ArrayList<>();
 

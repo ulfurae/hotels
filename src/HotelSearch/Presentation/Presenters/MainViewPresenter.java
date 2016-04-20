@@ -3,8 +3,8 @@ package HotelSearch.Presentation.Presenters;
 import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.Room;
 import HotelSearch.Presentation.Interfaces.*;
-import HotelSearch.Presentation.Views.SeeHotelPanel;
-
+import com.sun.tools.javac.util.Pair;
+import java.util.Date;
 import java.util.List;
 
 public class MainViewPresenter {
@@ -12,16 +12,14 @@ public class MainViewPresenter {
 
     private IMainView View;
     private ISearchPanel _searchPanel;
-    private ISearchPanel _sideSearchPanel;
     private IResultPanel _resultPanel;
     private ISeeHotelPanel _seeHotelPanel;
     private IBookRoomPanel _bookRoomPanel;
 
-    public MainViewPresenter(IMainView view, ISearchPanel frontPageP, ISearchPanel sideSearchP,
-                             IResultPanel resultP, ISeeHotelPanel seeHotelP, IBookRoomPanel bookRoomP) {
+    public MainViewPresenter(IMainView view, ISearchPanel frontPageP, IResultPanel resultP,
+                             ISeeHotelPanel seeHotelP, IBookRoomPanel bookRoomP) {
         View = view;
         _searchPanel = frontPageP;
-        _sideSearchPanel = sideSearchP;
         _resultPanel = resultP;
          _seeHotelPanel = seeHotelP;
         _bookRoomPanel = bookRoomP;
@@ -59,7 +57,6 @@ public class MainViewPresenter {
     boolean shMade = false;
     SeeHotelPanelPresenter sh;
     private void resultPanelCallback(Hotel hotel) {
-
         if(!shMade) {
             View.addComponent(_seeHotelPanel);
             sh = new SeeHotelPanelPresenter(_seeHotelPanel, this::seeHotelPanelCallback, hotel);
@@ -71,18 +68,15 @@ public class MainViewPresenter {
         updateViewVisibility(true);
     }
 
-
-
     boolean brMade = false;
     BookRoomPanelPresenter br;
     private void seeHotelPanelCallback(boolean backPressed, Hotel hotel) {
         if(backPressed)
             updateViewVisibility(!backPressed);
         else {
-
             if(!brMade) {
                 View.addComponent(_bookRoomPanel);
-                br = new BookRoomPanelPresenter( _bookRoomPanel, this::bookRoomPanelCallback, hotel);
+                br = new BookRoomPanelPresenter( _bookRoomPanel, this::bookRoomPanelCallback, this::getDates, hotel);
                 brMade = true;
             }
             else br.update(hotel);
@@ -92,11 +86,15 @@ public class MainViewPresenter {
         }
     }
 
-
-
     private void bookRoomPanelCallback(boolean backPressed, List<Room> room) {
         _seeHotelPanel.getView().setVisible(true);
         _bookRoomPanel.getView().setVisible(false);
+    }
+
+    private Pair<Date,Date> getDates() {
+        Date in = _searchPanel.getDateIn();
+        Date out = _searchPanel.getDateOut();
+        return new Pair(in, out);
     }
 
     //</editor-fold>

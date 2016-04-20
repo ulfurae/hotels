@@ -17,7 +17,6 @@ public class program {
 
         MainViewPresenter presenter = new MainViewPresenter(new MainView(),
                                                             new SearchPanel(),
-                                                            new SearchPanel(),
                                                             new ResultPanel(),
                                                             new SeeHotelPanel(),
                                                             new BookRoomPanel());

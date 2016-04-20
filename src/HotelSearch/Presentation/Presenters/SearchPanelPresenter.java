@@ -1,16 +1,12 @@
 package HotelSearch.Presentation.Presenters;
 
 import HotelSearch.Classes.Hotel;
+import HotelSearch.Classes.HotelSearchFilter;
 import HotelSearch.Presentation.Interfaces.ISearchPanel;
-import HotelSearch.System.DbUtils;
-import HotelSearch.System.QueryStringBuilder;
-import HotelSearch.System.SqlMapper;
+import HotelSearch.System.HotelFinder;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.List;
 
@@ -42,19 +38,11 @@ public class SearchPanelPresenter{
     }
 
     private List<Hotel> getHotels() {
-        String din = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateIn());
-        String dout = new SimpleDateFormat("yyyy-MM-dd").format(View.getDateOut());
-
-        List<String> sendList = new ArrayList<>();
-        sendList.add(View.getAreaName());
-        sendList.add(din);
-        sendList.add(dout);
-
-        List<String>  queryList = new QueryStringBuilder().makeSearchHotelsQuery(sendList);
-
-        ResultSet results = new DbUtils().SearchDB(queryList);
-
-        return new SqlMapper().mapHotelSearch(results);
+        HotelSearchFilter filter = new HotelSearchFilter();
+        filter.dateIn = View.getDateIn();
+        filter.dateOut = View.getDateOut();
+        filter.areaName = View.getAreaName();
+        return new HotelFinder().getHotels(filter);
     }
 
     //</editor-fold>

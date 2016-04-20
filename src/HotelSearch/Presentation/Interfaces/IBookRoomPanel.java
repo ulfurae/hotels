@@ -30,6 +30,8 @@ public interface IBookRoomPanel extends IView {
 
     void displayBookingError();
 
+    void clear();
+
     String getSelectedRoomType();
 
     //void setBtnName(String id);

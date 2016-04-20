@@ -1,10 +1,12 @@
 package HotelSearch.System;
 
 import HotelSearch.Classes.QueryResolvers.IQueryResolver;
+import HotelSearch.Classes.Room;
 import com.google.common.base.Defaults;
 import org.jooq.*;
-
 import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.reflect.Field;
@@ -12,15 +14,11 @@ import org.jooq.impl.DSL;
 import HotelSearch.Classes.SqlCustomQuery;
 import static org.jooq.impl.DSL.*;
 
-/**
- * Created by halldorr on 16/03/16.
- */
 public class QueryStringBuilder {
-
-    String dateIn, dateOut;
+    private String dateIn;
+    private String dateOut;
 
     public List<String> makeSearchHotelsQuery(List<String> input) {
-
         String area = input.get(0);
         dateIn = input.get(1);
         dateOut = input.get(2);
@@ -32,7 +30,7 @@ public class QueryStringBuilder {
         dateOut = "'" + dateOut + "'";
 
         String updateQuery = "DROP TABLE IF EXISTS tmpBooked;\n" +
-                "CREATE TEMPORARY TABLE tmpBooked (\n" +
+                "CREATE TABLE tmpBooked (\n" +
                 "\thotel_id int,\n" +
                 "\troom_number int );\n" +
                 "INSERT INTO tmpBooked\n" +
@@ -59,26 +57,9 @@ public class QueryStringBuilder {
                 "group by h.id;";
 
         return returnList(mainQuery,updateQuery);
-
-    }
-
-    public List<String> makeHotelInfoQuery(String hotel_id) {
-
-
-        String updateQuery = "";
-
-        String mainQuery =
-                "Select h.*, a.name area_name, a.airport\n" +
-                        "From Hotel h, Area a\n" +
-                        "Where h.area_id = a.id\n" +
-                        "and h.id = " + hotel_id;
-
-        return returnList(mainQuery,updateQuery);
-
     }
 
     public List<String> makeHotelRoomsQuery(String hotel_id) {
-
         String updateQuery = "DROP TABLE IF EXISTS tmpRoomBooked;\n" +
                 "CREATE TEMPORARY TABLE tmpRoomBooked (\n" +
                 "\thotel_id int,\n" +
@@ -107,15 +88,23 @@ public class QueryStringBuilder {
         return returnList(mainQuery,updateQuery);
     }
 
-
-    private  List<String> returnList(String a, String b) {
+    private List<String> returnList(String a, String b) {
         List<String> sendList = new ArrayList<String>();
         sendList.add(a);
         sendList.add(b);
         return sendList;
     }
 
+    public static String makeGuestCommand(String guestName, int ssnGuest) {
+        return "INSERT INTO Guest (name, ssn) VALUES ('" + guestName + "'," + ssnGuest + ");";
+    }
 
+    public static String makeBookingCommand(int ssnGuest, Date dateIn, Date dateOut, Room room) {
+        String dIn = new SimpleDateFormat("yyyy-MM-dd").format(dateIn);
+        String dOUt = new SimpleDateFormat("yyyy-MM-dd").format(dateOut);
+
+        return "INSERT INTO Booking (hotel_id, date_in, date_out, room_number, guest_id) VALUES (" + room.hotelId + " ,'" +  dIn + "' ,'" + dOUt + "' ," + room.number + " ,"  + ssnGuest + ");";
+    }
 
     public static SqlCustomQuery getSQLQueryString(Object filter, IQueryResolver resolver) {
         if (filter == null) throw new InvalidParameterException("Parameter filter can not be null");
@@ -150,5 +139,4 @@ public class QueryStringBuilder {
         query.values = step.getBindValues();
         return query;
     }
-
 }
