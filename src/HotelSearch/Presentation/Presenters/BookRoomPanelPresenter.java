@@ -4,7 +4,7 @@ import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.Room;
 import HotelSearch.Presentation.Interfaces.IBookRoomPanel;
 import HotelSearch.System.HotelBooker;
-import com.sun.tools.javac.util.Pair;
+import HotelSearch.Classes.Pair;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;

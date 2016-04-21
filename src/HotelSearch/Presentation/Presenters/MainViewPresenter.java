@@ -3,7 +3,7 @@ package HotelSearch.Presentation.Presenters;
 import HotelSearch.Classes.Hotel;
 import HotelSearch.Classes.Room;
 import HotelSearch.Presentation.Interfaces.*;
-import com.sun.tools.javac.util.Pair;
+import HotelSearch.Classes.Pair;
 import java.util.Date;
 import java.util.List;
 

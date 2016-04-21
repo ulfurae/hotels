@@ -19,8 +19,8 @@ public class DbUtils {
         PreparedStatement stat2 = null;
         resultSet = null;
 
-        System.out.println(queryList.get(0));
-        System.out.println(queryList.get(1));
+        //System.out.println(queryList.get(0));
+        //System.out.println(queryList.get(1));
 
         try {
             // connection made to the database

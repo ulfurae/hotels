@@ -51,8 +51,8 @@ public class QueryStringBuilder {
                 "Where h.area_id = a.id\n" +
                 "and rt.id = r.room_type_id\n" +
                 "and h.id = r.hotel_id\n" +
-                "and h.id NOT IN \n" +
-                "\t(Select hotel_id from tmpBooked)\n" +
+                "and concat(h.id,r.number) NOT IN \n" +
+                "\t(Select concat(hotel_id,room_number) from tmpBooked)\n" +
                 "and a.name " + area  + "\n" +
                 "group by h.id;";
 
